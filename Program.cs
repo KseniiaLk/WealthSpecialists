@@ -10,7 +10,7 @@ namespace WealthSpecialists
     {
         static void Main(string[] args)
         {
-            Account konto = new Account(12000, "SEK");
+            Account konto = new SavingsAccount(12000, "SEK");
             Console.WriteLine(konto._accountNumber);
         }
     }
