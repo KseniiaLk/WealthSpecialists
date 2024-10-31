@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WealthSpecialists
 {
-    internal class Account
+     public abstract class Account
     {
         public Account(double accountBalance, string currencyType)
         {
@@ -19,4 +19,25 @@ namespace WealthSpecialists
         public Guid _accountNumber { get; set; }
         public string _currencyType { get; set; }
     }
+    internal class SavingsAccount : Account
+    {
+        public SavingsAccount(double accountBalance, string currencyType) : base(accountBalance, currencyType)
+        {
+            _interestRate = 2.5;
+        }
+
+        public double _interestRate { get; set; }
+
+    }
+    internal class ForeingCurrency : Account
+    {
+        public ForeingCurrency(double accountBalance, string currencyType, string currency) : base(accountBalance, currencyType)
+        {
+            _currencyType = currency;
+        }
+
+        public string _currencyType { get; set; }
+    }
+
+    
 }
