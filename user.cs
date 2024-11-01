@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace WealthSpecialists
 {
-    public class user
+    public class User
     {
     }
 
-    public class Costumer : user
+    public class Costumer : User
     {
         //list containing accounts user has, using abstract class account as <Type>
-        List<Account> _accounts = new List<Account>();
+        public List<Account> _accounts = new List<Account>();
         
         public Costumer (string userName, string passWord, Guid guid) : base (userName, passWord, guid)
         {
@@ -21,7 +21,7 @@ namespace WealthSpecialists
         }
     }
 
-    public class Manager : user
+    public class Manager : User
     {
         public Manager (string userName, string passWord, Guid guid) : base (userName, passWord, guid)
         {
