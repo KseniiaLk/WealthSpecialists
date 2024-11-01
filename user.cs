@@ -26,6 +26,7 @@ namespace WealthSpecialists
         public Manager (string userName, string passWord, Guid guid) : base (userName, passWord, guid)
         {
 
+
         }
     }
 
