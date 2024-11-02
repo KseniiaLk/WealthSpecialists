@@ -29,6 +29,10 @@ namespace WealthSpecialists
         {
 
         }
+        public void Add_account(Account account)
+        {
+            _accounts.Add(account);
+        }
     }
 
     public class Manager : User
