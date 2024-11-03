@@ -11,7 +11,7 @@ namespace WealthSpecialists
         //these list and dictionarys will hold the user database, at first we will use the list for simplicitys sake then
         //when we know the setup for the applikation we will use will start using the dictionary later
         Dictionary<string,User> _userRegistry = new Dictionary<string,User>();
-        List<User> _UserRegistry = new List<User>();
+        ICollection<User> _UserRegistry = new List<User>();
 
 
         // the bank applikation will use the other classes to perform the actions/methods that are neaded,
@@ -21,5 +21,16 @@ namespace WealthSpecialists
 
         public Account _account2 { get; set; }
 
+        public void Add_acc(Account account)
+        {
+            if (_user is Customer kund)
+            {
+                kund.Add_account(account);
+            }
+            else
+            {
+                Console.WriteLine("your User profile has no accounts");
+            }
+        }
     }
 }
