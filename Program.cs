@@ -15,9 +15,33 @@ namespace WealthSpecialists
             {
                 Bank_Applikation applikation = new Bank_Applikation();
                 applikation._user=Loggin(applikation);
-               
-               
 
+
+                switch (access(applikation._user))
+                {
+                    case 1:
+                        Console.WriteLine("[1]KontoÖversikt");
+                        Console.WriteLine("[2]Överföring av pengar");
+                        Console.WriteLine("[3]Skapa nytt Konto");
+                        Console.WriteLine("[4]Ansök om lån");
+                        Console.WriteLine("[5]Logga ut");
+                        int.TryParse(Console.ReadLine(), out int userInput);
+                        //first meny we use userinput to access relevant 
+                        break;
+                    case 2:
+                        Console.WriteLine("[1]Skapa ny kund");
+                        Console.WriteLine("[2]Uppdatera valutaomvandling");
+                        Console.WriteLine("[3]Logga ut");
+                        int.TryParse(Console.ReadLine(), out int userInput2);
+                        break;
+                    case null:
+                        Console.WriteLine("fel användarnamn/lösenord");
+                        //+ a counter to count number of logins for later
+                        break;
+
+
+
+                }
 
 
             }
