@@ -17,9 +17,7 @@ namespace WealthSpecialists
         // the bank applikation will use the other classes to perform the actions/methods that are neaded,
         //the exakt methos will have to be discusses in a  group metting
         public User _user { get; set; }
-        public Account _account { get; set; }
-
-        public Account _account2 { get; set; }
+        public  ICollection<Account> _accounts { get; set; }
 
         public void Add_acc(Account account)
         {

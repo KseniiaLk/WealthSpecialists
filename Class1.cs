@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace WealthSpecialists
 {
-    internal class Program
+    internal class Class1
     {
-        //static void Main(string[] args)
-        //{
-
-        //}
     }
 }
