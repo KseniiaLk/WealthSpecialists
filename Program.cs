@@ -15,6 +15,8 @@ namespace WealthSpecialists
             {
                 Bank_Applikation applikation = new Bank_Applikation();
                 applikation._user=Loggin(applikation);
+               
+               
 
 
 
@@ -36,6 +38,20 @@ namespace WealthSpecialists
             }
             return null;
         }
+        static int? access(User user)
+        {
+            if (user is Customer)
+            {
+                return 1;
+            }
+            else if (user is Manager)
+            {
+                return 2;
+            }
+            else
+                return null;
+        }
+            
 
 
 
