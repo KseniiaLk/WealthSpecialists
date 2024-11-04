@@ -18,6 +18,7 @@ namespace WealthSpecialists
         //the exakt methos will have to be discusses in a  group metting
         public User _user { get; set; }
         public  ICollection<Account> _accounts { get; set; }
+        public Account _account{ get; set; }
 
         public void Add_acc(Account account)
         {
