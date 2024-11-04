@@ -8,13 +8,13 @@ namespace WealthSpecialists
 {
     public abstract class User
     {
-        string _userName { get; set; }
-        string _passWord { get; set; }
+        public string _userName { get; set; }
+        public string _passWord { get; set; }
         Guid _id { get; set; }
 
-        protected User(string userName, string passWord, Guid id)
+        public User(string userName, string passWord)
         {
-            _id = id;
+            _id = Guid.NewGuid();
             _userName = userName;
             _passWord = passWord;
         }
@@ -25,7 +25,7 @@ namespace WealthSpecialists
         //list containing accounts user has, using abstract class account as <Type>
         public List<Account> _accounts = new List<Account>();
         
-        public Customer (string userName, string passWord, Guid guid) : base (userName, passWord, guid)
+        public Customer (string userName, string passWord) : base (userName, passWord)
         {
 
         }
@@ -37,7 +37,7 @@ namespace WealthSpecialists
 
     public class Manager : User
     {
-        public Manager (string userName, string passWord, Guid guid) : base (userName, passWord, guid)
+        public Manager (string userName, string passWord) : base (userName, passWord)
         {
 
 
