@@ -19,14 +19,19 @@ namespace WealthSpecialists
 
         public void Add_acc(Account account)
         {
-            if (_user is Customer kund)
+            if (_user is Customer kund && account is SavingsAccount acc)
             {
                 kund.Add_account(account);
+                Console.WriteLine($"A new account has been added with an interest rate of {acc._interestRate} per Annum");
             }
-            else
+            else 
             {
-                Console.WriteLine("your User profile has no accounts");
+                Console.WriteLine("yuor User prifile does not allowe accounts to be added, try switching accounts to accses this funtion");
             }
+        }
+        public void veiw_interest(Account account)
+        {
+            Console.WriteLine($"Your account {account._accountNumber} currently has a interest rate of {account._interestRate} per annum");
         }
 
     }
