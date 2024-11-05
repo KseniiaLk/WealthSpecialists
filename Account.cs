@@ -18,6 +18,7 @@ namespace WealthSpecialists
         public double _accountBalance = 0;
         public Guid _accountNumber { get; set; }
         public string _currencyType { get; set; }
+        public double _interestRate { get; set; }
     }
     internal class SavingsAccount : Account
     {
@@ -26,7 +27,7 @@ namespace WealthSpecialists
             _interestRate = 2.5;
         }
 
-        public double _interestRate { get; set; }
+        
 
     }
     internal class ForeingCurrency : Account
