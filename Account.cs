@@ -16,6 +16,7 @@ namespace WealthSpecialists
         }
 
         public double _accountBalance = 0;
+        public double _LoanAmount = 0;
         public Guid _accountNumber { get; set; }
         public string _currencyType { get; set; }
         public double _interestRate { get; set; }
