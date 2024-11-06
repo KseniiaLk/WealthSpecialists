@@ -10,6 +10,8 @@ namespace WealthSpecialists
     {
         public string _userName { get; set; }
         public string _passWord { get; set; }
+
+        public bool _isLocked { get; set; }
         Guid _id { get; set; }
 
         public User(string userName, string passWord)
@@ -24,6 +26,8 @@ namespace WealthSpecialists
     {
         //list containing accounts user has, using abstract class account as <Type>
         public List<Account> _accounts = new List<Account>();
+        public List<AccountHistory> _accountHistory = new List<AccountHistory>();
+
         
         public Customer (string userName, string passWord) : base (userName, passWord)
         {
@@ -33,6 +37,14 @@ namespace WealthSpecialists
         {
             _accounts.Add(account);
         }
+
+        /*public void Add_History()
+        {
+            AccountHistory accountHistory = new AccountHistory();
+        }
+        future add accounthistory to list
+        */
+
     }
 
     public class Manager : User
