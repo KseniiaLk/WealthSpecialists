@@ -10,7 +10,7 @@ namespace WealthSpecialists
     {
 
         Dictionary<string, User> _userRegistry = new Dictionary<string, User>();
-        public ICollection<User> _UserRegistry = new List<User> { new Customer("Erik", "password") };
+        public List<User> _UserRegistry = new List<User> { new Customer("Erik", "password") };
 
 
         public User _user { get; set; }
