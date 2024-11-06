@@ -11,13 +11,14 @@ namespace WealthSpecialists
         public Account(double accountBalance, string currencyType)
         {
             _accountBalance = accountBalance;
-            _accountNumber = Guid.NewGuid();
+            _accountID = Guid.NewGuid();
             _currencyType = currencyType;
         }
 
         public double _accountBalance = 0;
         public double _LoanAmount = 0;
-        public Guid _accountNumber { get; set; }
+        public string _accountname { get; set; }
+        public Guid _accountID { get; set; }
         public string _currencyType { get; set; }
         public double _interestRate { get; set; }
     }

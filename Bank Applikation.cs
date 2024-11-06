@@ -31,10 +31,10 @@ namespace WealthSpecialists
         }
         public void Veiw_interest(Account account)
         {
-            Console.WriteLine($"Your account {account._accountNumber} currently has a interest rate of {account._interestRate} per annum");
+            Console.WriteLine($"Your account {account._accountID} currently has a interest rate of {account._interestRate} per annum");
         }
         // Method for requesting loan, it also handels 
-        public double? Request_loan(Account account)
+        public double Request_loan(Account account)
         {
             Console.WriteLine($"You can Loan a maximum amount of {account._accountBalance * 5} at an interest rate of {account._interestRate}% \n how much yould you like to Loan?: ");
             if (double.TryParse(Console.ReadLine(), out double amount) && amount <= account._accountBalance * 5)
@@ -45,12 +45,26 @@ namespace WealthSpecialists
             else
             {
                 Console.WriteLine("your loan has been denied");
-                return null;
+                return 0;
             }
         }
         public void Aprove_loan(Account account, double loan)
         {
             account._LoanAmount += loan;
+        }
+        public void Veiw_accounts_information(User user)
+        {
+            if (user is Customer customer)
+            {
+                foreach (Account item in customer._accounts)
+                {
+                    Console.WriteLine($"Account: {item._accountname}\nBalance: {item._accountBalance} {item._currencyType}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("User is not a customer, cannot veiw account information");
+            }
         }
 
 
