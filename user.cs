@@ -52,6 +52,16 @@ namespace WealthSpecialists
         public Manager (string userName, string passWord) : base (userName, passWord)
         {
 
+        }
+        public void Add_user(UserService userService)
+        {
+            Console.WriteLine("Vänligen skriv in ditt användarnamn");
+            string input = Console.ReadLine();
+            Console.WriteLine("Vänligen skriv in ditt lösenord");
+            string pwinput = Console.ReadLine();
+            Customer customer = new Customer (input, pwinput);
+            userService.users.Add(customer);
+            Console.WriteLine($"Användaren: {input} har blivit skapad.");
 
         }
     }
