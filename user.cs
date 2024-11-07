@@ -28,8 +28,8 @@ namespace WealthSpecialists
         public List<Account> _accounts = new List<Account>();
         public List<AccountHistory> _accountHistory = new List<AccountHistory>();
 
-        
-        public Customer (string userName, string passWord) : base (userName, passWord)
+
+        public Customer(string userName, string passWord) : base(userName, passWord)
         {
 
         }
@@ -37,6 +37,13 @@ namespace WealthSpecialists
         {
             _accounts.Add(account);
         }
+        public void Logg_history(int amount, string currency, Guid accountFrom, Guid accountTo)
+        {
+            AccountHistory accountlogg = new AccountHistory(amount, currency, accountFrom, accountTo);
+            _accountHistory.Add(accountlogg);
+            Console.WriteLine("Transaktion has been saved to your transaktion history.");
+        }
+            
 
         /*public void Add_History()
         {

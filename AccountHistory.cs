@@ -11,16 +11,17 @@ namespace WealthSpecialists
         public int _amount { get; set; }
         public string _currency { get; set; }
         public DateTime _date = DateTime.Now;
+        public Guid _accountNumberFrom;
+        public Guid _accountNumberTo;
 
-        public int _accountNumber;
-
-        public AccountHistory(int amount, string currency, int accountNumber)
+        public AccountHistory(int amount, string currency, Guid accountNumberFrom, Guid accountNumberTo)
         {
             _amount = amount;
             _currency = currency;
-            _accountNumber = accountNumber;
-
+            _accountNumberFrom = accountNumberFrom;
+            _accountNumberTo = accountNumberTo;
 
         }
+
     }
 }
