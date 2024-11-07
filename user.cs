@@ -56,13 +56,15 @@ namespace WealthSpecialists
             _accountHistory.Add(accountlogg);
             Console.WriteLine("Transaktion has been saved to your transaktion history.");
         }
-        public void Transfer(List<Account> accounts)
+        //Michaels bästa logik
+        public void Transfer(Bank_Applikation _bankApp)
         {
             Veiw_accounts_information();
             Console.WriteLine("From which account would you like to transfer?");
             int.TryParse(Console.ReadLine(), out int input);
             Console.WriteLine("Choose the account you want to transfer to?");
             int.TryParse(Console.ReadLine(), out int inputtwo);
+
             if (input == inputtwo)
             {
                 Console.WriteLine("Sorry we cant transfer");
@@ -72,9 +74,26 @@ namespace WealthSpecialists
             if (inputthree > _accounts[input-1]._accountBalance)
             {
                 Console.WriteLine("Still not enough money");
-            }else if(inputthree <= _accounts[input - 1]._accountBalance)
+            }
+            else if (_accounts[inputtwo - 1] is ForeingCurrency)
+            {
+                if (_accounts[input - 1]._currencyType == "$") 
+                {
+                    double output = inputthree / _bankApp._dollar;
+                    _accounts[inputtwo - 1]._accountBalance += output;
+                    _accounts[input - 1]._accountBalance -= inputthree;
+                }
+                else if(_accounts[input - 1]._currencyType == "£")
+                 {
+                    double output = inputthree / _bankApp._euro;
+                    _accounts[inputtwo - 1]._accountBalance += output;
+                    _accounts[input - 1]._accountBalance -= inputthree;
+                }
+            }
 
-             {
+            else if(inputthree <= _accounts[input - 1]._accountBalance)
+
+            {
                 Console.WriteLine("You can transfer");
                 _accounts[input - 1]._accountBalance -= inputthree;
                 _accounts[inputtwo - 1]._accountBalance += inputthree;
