@@ -11,6 +11,9 @@ namespace WealthSpecialists
 
         Dictionary<string, User> _userRegistry = new Dictionary<string, User>();
         public List<User> _UserRegistry = new List<User> { new Customer("Erik", "password") };
+        public double _sek = 1;
+        public double _dollar = 11;
+        public double _euro = 12;
 
 
         public User _user { get; set; }
@@ -53,6 +56,23 @@ namespace WealthSpecialists
             account._LoanAmount += loan;
         }
 
+
+        public double CurrencyConverter(Account account)
+        {
+            if(account._currencyType == "dollar")
+            {
+                double output = _dollar / account._accountBalance;
+                return output;
+            }
+            else if(account._currencyType == "Euro")
+            {
+                double output = _euro / account._accountBalance;
+                return output;
+            }
+            Console.WriteLine("Conversion failed");
+            return 0;
+
+        }
 
     }
 }
