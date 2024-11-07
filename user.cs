@@ -10,7 +10,6 @@ namespace WealthSpecialists
     {
         public string _userName { get; set; }
         public string _passWord { get; set; }
-
         public bool _isLocked { get; set; }
         Guid _id { get; set; }
 
@@ -37,13 +36,23 @@ namespace WealthSpecialists
         {
             _accounts.Add(account);
         }
+        public void Veiw_accounts_information()
+        {
+            foreach (Account item in _accounts)
+            {
+                Console.WriteLine($"\nAccount: {item._accountname}\nBalance: {item._accountBalance} {item._currencyType}");
+            }
+        }
+        public void Weiv_detailed_account_information(Account account)
+        {
+            Console.WriteLine($"Account Name: {account._accountname}Current balance: {account._accountBalance}\nCurrent Debt: {account._LoanAmount}\nCurrency Type{account._currencyType} \nInterestrate: {account._interestRate}\nAccount ID {account._accountID}");
+
         public void Logg_history(int amount, string currency, Guid accountFrom, Guid accountTo)
         {
             AccountHistory accountlogg = new AccountHistory(amount, currency, accountFrom, accountTo);
             _accountHistory.Add(accountlogg);
             Console.WriteLine("Transaktion has been saved to your transaktion history.");
         }
-            
 
         /*public void Add_History()
         {
