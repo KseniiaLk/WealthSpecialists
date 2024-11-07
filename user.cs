@@ -27,8 +27,8 @@ namespace WealthSpecialists
         public List<Account> _accounts = new List<Account>();
         public List<AccountHistory> _accountHistory = new List<AccountHistory>();
 
-        
-        public Customer (string userName, string passWord) : base (userName, passWord)
+
+        public Customer(string userName, string passWord) : base(userName, passWord)
         {
 
         }
@@ -46,6 +46,12 @@ namespace WealthSpecialists
         public void Weiv_detailed_account_information(Account account)
         {
             Console.WriteLine($"Account Name: {account._accountname}Current balance: {account._accountBalance}\nCurrent Debt: {account._LoanAmount}\nCurrency Type{account._currencyType} \nInterestrate: {account._interestRate}\nAccount ID {account._accountID}");
+
+        public void Logg_history(int amount, string currency, Guid accountFrom, Guid accountTo)
+        {
+            AccountHistory accountlogg = new AccountHistory(amount, currency, accountFrom, accountTo);
+            _accountHistory.Add(accountlogg);
+            Console.WriteLine("Transaktion has been saved to your transaktion history.");
         }
 
         /*public void Add_History()
@@ -72,6 +78,28 @@ namespace WealthSpecialists
             Customer customer = new Customer (input, pwinput);
             userService.users.Add(customer);
             Console.WriteLine($"Användaren: {input} har blivit skapad.");
+
+        }
+
+        public void UpdateCurrency(Bank_Applikation bank)
+        {
+            Console.WriteLine("Which currency would you like to update");
+            Console.WriteLine($"1: Dollar which is at the moment worth : {bank._dollar} in sek");
+            Console.WriteLine($"2: Euro which is at the moment worth : {bank._euro} in sek");
+
+            int.TryParse(Console.ReadLine(),out int input);
+            if (input == 1)
+            {
+                Console.WriteLine("Énter the new value for dollar in sek");
+                int.TryParse(Console.ReadLine(), out int inputDollar);
+                bank._dollar = inputDollar;
+            }
+            if (input == 2)
+            {
+                Console.WriteLine("Enter the new value for euro in sek");
+                int.TryParse(Console.ReadLine(), out int inputEuro);
+                bank._euro = inputEuro;
+            }
 
         }
     }
