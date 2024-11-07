@@ -38,21 +38,52 @@ namespace WealthSpecialists
         }
         public void Veiw_accounts_information()
         {
+            int num = 1;
             foreach (Account item in _accounts)
             {
-                Console.WriteLine($"\nAccount: {item._accountname}\nBalance: {item._accountBalance} {item._currencyType}");
+                Console.WriteLine($"${num} +\nAccount: {item._accountname}\nBalance: {item._accountBalance} {item._currencyType}");
+                num++;
             }
+
         }
         public void Weiv_detailed_account_information(Account account)
         {
             Console.WriteLine($"Account Name: {account._accountname}Current balance: {account._accountBalance}\nCurrent Debt: {account._LoanAmount}\nCurrency Type{account._currencyType} \nInterestrate: {account._interestRate}\nAccount ID {account._accountID}");
-
+        }
         public void Logg_history(int amount, string currency, Guid accountFrom, Guid accountTo)
         {
             AccountHistory accountlogg = new AccountHistory(amount, currency, accountFrom, accountTo);
             _accountHistory.Add(accountlogg);
             Console.WriteLine("Transaktion has been saved to your transaktion history.");
         }
+        public void Transfer(List<Account> accounts)
+        {
+            Veiw_accounts_information();
+            Console.WriteLine("From which account would you like to transfer?");
+            int.TryParse(Console.ReadLine(), out int input);
+            Console.WriteLine("Choose the account you want to transfer to?");
+            int.TryParse(Console.ReadLine(), out int inputtwo);
+            if (input == inputtwo)
+            {
+                Console.WriteLine("Sorry we cant transfer");
+            }
+            Console.WriteLine("How much money would you like to transfer?");
+            int.TryParse(Console.ReadLine(), out int inputthree);
+            if (inputthree > _accounts[input-1]._accountBalance)
+            {
+                Console.WriteLine("Still not enough money");
+            }else if(inputthree <= _accounts[input - 1]._accountBalance)
+
+             {
+                Console.WriteLine("You can transfer");
+                _accounts[input - 1]._accountBalance -= inputthree;
+                _accounts[inputtwo - 1]._accountBalance += inputthree;
+                Console.WriteLine("Transfer is done");
+
+            }
+    }
+
+            
 
         /*public void Add_History()
         {
