@@ -64,6 +64,28 @@ namespace WealthSpecialists
             Console.WriteLine($"Användaren: {input} har blivit skapad.");
 
         }
+
+        public void UpdateCurrency(Bank_Applikation bank)
+        {
+            Console.WriteLine("Which currency would you like to update");
+            Console.WriteLine($"1: Dollar which is at the moment worth : {bank._dollar} in sek");
+            Console.WriteLine($"2: Euro which is at the moment worth : {bank._euro} in sek");
+
+            int.TryParse(Console.ReadLine(),out int input);
+            if (input == 1)
+            {
+                Console.WriteLine("Énter the new value for dollar in sek");
+                int.TryParse(Console.ReadLine(), out int inputDollar);
+                bank._dollar = inputDollar;
+            }
+            if (input == 2)
+            {
+                Console.WriteLine("Enter the new value for euro in sek");
+                int.TryParse(Console.ReadLine(), out int inputEuro);
+                bank._euro = inputEuro;
+            }
+
+        }
     }
 
 }
