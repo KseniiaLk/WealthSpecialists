@@ -127,7 +127,7 @@ namespace WealthSpecialists
             int num = 1;
             foreach (Account item in _accounts)
             {
-                Console.WriteLine($"{num} +\nAccount: {item._accountNumber}\nBalance: {item._accountBalance} {item._currencyType}");
+                Console.WriteLine($"{num} +\nAccount: {item._accountname}\nBalance: {item._accountBalance} {item._currencyType}");
                 num++;
             }
         }
