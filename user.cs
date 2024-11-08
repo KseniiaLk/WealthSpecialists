@@ -107,12 +107,6 @@ namespace WealthSpecialists
             }
 
         }
-        public void Logg_history(int amount, string currency, Guid accountFrom, Guid accountTo)
-        {
-            AccountHistory accountlogg = new AccountHistory(amount, currency, accountFrom, accountTo);
-            _accountHistory.Add(accountlogg);
-            Console.WriteLine("Transaktion has been saved to your transaktion history.");
-        }
         public void Transfer(List<Account> accounts)
         {
   
@@ -140,16 +134,6 @@ namespace WealthSpecialists
 
             }
     }
-
-            
-
-        /*public void Add_History()
-        {
-            AccountHistory accountHistory = new AccountHistory();
-        }
-        future add accounthistory to list
-        */
-
     }
 
     public class Manager : User
