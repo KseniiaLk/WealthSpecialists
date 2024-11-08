@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,10 +26,6 @@ namespace WealthSpecialists
     {
         //list containing accounts user has, using abstract class account as <Type>
         public List<Account> _accounts = new List<Account>();
-        public IDictionary<int,IList<double>> _transactionHistory = new Dictionary<int,IList<double>>();
-        public List<AccountHistory> _accountHistory = new List<AccountHistory>();
-
-
         public Customer(string userName, string passWord) : base(userName, passWord)
         {
 
@@ -49,27 +46,32 @@ namespace WealthSpecialists
         // display the acount names of the user
         public void Display_accounts()
         {
+            int num = 1;
             foreach (Account item in _accounts)
             {
-                Console.WriteLine($"item {item._accountname}");
+                Console.WriteLine($"Account: {num} {item._accountname}");
+                num++;
             }
         }
         // selects an account based on account name, the string promt makes the method reusebal for different meny choises
-        //display accounts () is used internaly to also display the accounts by name 
+        //display accounts () is used internaly to also display the accounts by name
         public Account Select_account(string prompt) 
         {
             Display_accounts();
             //asking the user what acccount they want to select, and for what reason/purpoe (prompt)
             Console.WriteLine(prompt);
-            string choise = Console.ReadLine();
-            foreach(Account item in _accounts)
+            int choise;
+            while (true)
             {
-                if (choise ==item._accountname)
+                if (int.TryParse(Console.ReadLine(), out choise)&& choise >0 && choise< _accounts.Count)
                 {
-                    return item;
-                }                
+                    return _accounts[choise - 1];
+                }
+                else
+                {
+                    Console.WriteLine("Not a valid account number, try again");
+                }
             }
-            return null;
         }
         // adds a account to the list of accounts, can be used when creating accounts or when moving accounts
         public void Add_account(Account account)
@@ -82,25 +84,28 @@ namespace WealthSpecialists
             int num = 1;
             foreach (Account item in _accounts)
             {
-                Console.WriteLine($"${num} +\nAccount: {item._accountname}\nBalance: {item._accountBalance} {item._currencyType}");
+                Console.WriteLine($" \nAccount: {num} {item._accountname}\nBalance: {item._accountBalance} {item._currencyType}");
                 num++;
             }
         }
         // prints all the availebal information about a specific account
         public void Weiv_detailed_account_information(Account account)
         {
-            Console.WriteLine($"Account Name: {account._accountname}Current balance: {account._accountBalance}\nCurrent Debt: {account._LoanAmount}\nCurrency Type{account._currencyType} \nInterestrate: {account._interestRate}\nAccount ID {account._accountID}");
+            Console.WriteLine($"Account Name: {account._accountname}Current balance: {account._accountBalance}\nCurrent Debt: {account._LoanAmount}\nCurrency Type: {account._currencyType} \nInterestrate: {account._interestRate}\nAccount ID {account._accountID}");
         }
         // transaction: 0:account balance at time of transfer , 1: -/+ amount transferd , 2: amount after trnsfer
         public void Log_transaction(Account account, double transfer)
         {
-            int index = 0;
-            foreach (var item in _transactionHistory)
+            account._accounthistory.Add(new AccountHistory(account,transfer));
+        }
+        public void Veiw_account_history(Account account)
+        {
+            int num = 1;
+            foreach (AccountHistory item in account._accounthistory)
             {
-                index++;
-
+                Console.WriteLine($" {num}. {item._date} {item._previusBalance} {item._amountTransfered} Balance after transaction: {item._postBalance}");
             }
-            _transactionHistory.Add(index, new List<double> { account._accountBalance, transfer, account._accountBalance+transfer});
+
         }
         public void Logg_history(int amount, string currency, Guid accountFrom, Guid accountTo)
         {
@@ -110,6 +115,7 @@ namespace WealthSpecialists
         }
         public void Transfer(List<Account> accounts)
         {
+  
             Veiw_accounts_information();
             Console.WriteLine("From which account would you like to transfer?");
             int.TryParse(Console.ReadLine(), out int input);
