@@ -10,10 +10,15 @@ namespace WealthSpecialists
     {
         public Account(double accountBalance, string currencyType)
         {
+
             _accountBalance = accountBalance;
             _accountID = Guid.NewGuid();
             _currencyType = currencyType;
+            
+            
         }
+
+        public int _accountNumber  = 1;
 
         public double _accountBalance = 0;
         public double _LoanAmount = 0;
