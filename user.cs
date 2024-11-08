@@ -25,7 +25,7 @@ namespace WealthSpecialists
     {
         //list containing accounts user has, using abstract class account as <Type>
         public List<Account> _accounts = new List<Account>();
-        public IDictionary<int,IList<int>> _transactionHistory = new Dictionary<int,IList<int>>();
+        public IDictionary<int,IList<double>> _transactionHistory = new Dictionary<int,IList<double>>();
         public List<AccountHistory> _accountHistory = new List<AccountHistory>();
 
 
@@ -46,14 +46,20 @@ namespace WealthSpecialists
         {
             account._accountBalance = +sum;
         }
-        // selects an account based on account name, the string promt makes the method reusebal for different meny choises
-        public Account Select_account(string prompt)
+        // display the acount names of the user
+        public void Display_accounts()
         {
             foreach (Account item in _accounts)
             {
-                Console.WriteLine($"item{item._accountname}");
+                Console.WriteLine($"item {item._accountname}");
             }
-            //asking the user what acccount they want to select
+        }
+        // selects an account based on account name, the string promt makes the method reusebal for different meny choises
+        //display accounts () is used internaly to also display the accounts by name 
+        public Account Select_account(string prompt) 
+        {
+            Display_accounts();
+            //asking the user what acccount they want to select, and for what reason/purpoe (prompt)
             Console.WriteLine(prompt);
             string choise = Console.ReadLine();
             foreach(Account item in _accounts)
@@ -70,6 +76,7 @@ namespace WealthSpecialists
         {
             _accounts.Add(account);
         }
+        // veiw general information about user acount's (name, balance , currencytype)
         public void Veiw_accounts_information()
         {
             int num = 1;
@@ -79,10 +86,21 @@ namespace WealthSpecialists
                 num++;
             }
         }
-
+        // prints all the availebal information about a specific account
         public void Weiv_detailed_account_information(Account account)
         {
             Console.WriteLine($"Account Name: {account._accountname}Current balance: {account._accountBalance}\nCurrent Debt: {account._LoanAmount}\nCurrency Type{account._currencyType} \nInterestrate: {account._interestRate}\nAccount ID {account._accountID}");
+        }
+        // transaction: 0:account balance at time of transfer , 1: -/+ amount transferd , 2: amount after trnsfer
+        public void Log_transaction(Account account, double transfer)
+        {
+            int index = 0;
+            foreach (var item in _transactionHistory)
+            {
+                index++;
+
+            }
+            _transactionHistory.Add(index, new List<double> { account._accountBalance, transfer, account._accountBalance+transfer});
         }
         public void Logg_history(int amount, string currency, Guid accountFrom, Guid accountTo)
         {
