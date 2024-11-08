@@ -25,6 +25,7 @@ namespace WealthSpecialists
     {
         //list containing accounts user has, using abstract class account as <Type>
         public List<Account> _accounts = new List<Account>();
+        public IDictionary<int,IList<int>> _transactionHistory = new Dictionary<int,IList<int>>();
         public List<AccountHistory> _accountHistory = new List<AccountHistory>();
 
 
@@ -32,6 +33,39 @@ namespace WealthSpecialists
         {
 
         }
+        // Both methods below can be added togeter to create Logic for transfering money
+        // Ither seperatly or combined in another method
+
+        // Removes money from an account, sum is the amount
+        public void Remove_money(Account account, double sum)
+        {
+            account._accountBalance =- sum;
+        }
+        // Adds money to an account, sum is the amount
+        public void Add_money(Account account, double sum)
+        {
+            account._accountBalance = +sum;
+        }
+        // selects an account based on account name, the string promt makes the method reusebal for different meny choises
+        public Account Select_account(string prompt)
+        {
+            foreach (Account item in _accounts)
+            {
+                Console.WriteLine($"item{item._accountname}");
+            }
+            //asking the user what acccount they want to select
+            Console.WriteLine(prompt);
+            string choise = Console.ReadLine();
+            foreach(Account item in _accounts)
+            {
+                if (choise ==item._accountname)
+                {
+                    return item;
+                }                
+            }
+            return null;
+        }
+        // adds a account to the list of accounts, can be used when creating accounts or when moving accounts
         public void Add_account(Account account)
         {
             _accounts.Add(account);
@@ -44,8 +78,8 @@ namespace WealthSpecialists
                 Console.WriteLine($"${num} +\nAccount: {item._accountname}\nBalance: {item._accountBalance} {item._currencyType}");
                 num++;
             }
-
         }
+
         public void Weiv_detailed_account_information(Account account)
         {
             Console.WriteLine($"Account Name: {account._accountname}Current balance: {account._accountBalance}\nCurrent Debt: {account._LoanAmount}\nCurrency Type{account._currencyType} \nInterestrate: {account._interestRate}\nAccount ID {account._accountID}");
@@ -118,6 +152,13 @@ namespace WealthSpecialists
         public Manager (string userName, string passWord) : base (userName, passWord)
         {
 
+        }
+        // Creates a account, and returns it for use by the system. can for example be used by
+        // "Add_account" method under Coustomer
+        public Account Create_account(double balance, string currencyType)
+        {
+            Account newAccount = new SavingsAccount(balance, currencyType);
+            return newAccount;
         }
         public void Add_user(UserService userService)
         {
