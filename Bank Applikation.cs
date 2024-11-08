@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WealthSpecialists
 {
@@ -10,7 +11,7 @@ namespace WealthSpecialists
     {
 
         Dictionary<string, User> _userRegistry = new Dictionary<string, User>();
-        public List<User> _UserRegistry = new List<User> { new Customer("Erik", "password") };
+        public List<User> _UserRegistry = new List<User> { new Manager("Raidar", "Bääst"), new Customer("Erik", "password")};
         public double _sek = 1;
         public double _dollar = 11;
         public double _euro = 12;
@@ -20,6 +21,80 @@ namespace WealthSpecialists
         public ICollection<Account> _accounts { get; set; }
         public Account _account { get; set; }
 
+        public void menu()
+        {
+            while (true)
+            {
+              Console.WriteLine("[1]logg in to account");
+               _user = Login();
+                User user = Login();
+                int? v = access(_user);
+                switch (v)
+                { 
+                    case 1:
+                        Console.WriteLine("[1]KontoÖversikt");
+                        Console.WriteLine("[2]Överföring av pengar");
+                        Console.WriteLine("[3]Skapa nytt Konto");
+                        Console.WriteLine("[4]Ansök om lån");
+                        Console.WriteLine("[5]Logga ut");
+                        int.TryParse(Console.ReadLine(), out int input);
+                        switch (input)
+                        {
+                            case 1:
+                                user.Veiw_accounts_information();
+
+
+
+
+                        }
+                        break;
+ 
+
+
+                    case 2:
+                        Console.WriteLine("[1]Skapa ny kund");
+                        Console.WriteLine("[2]Uppdatera valutaomvandling");
+                        Console.WriteLine("[3]Logga ut");
+                        int.TryParse(Console.ReadLine(), out int userInput2);
+                        break;
+                    case null:
+                        Console.WriteLine("fel användarnamn/lösenord");
+                        //+ a counter to count number of logins for later
+                        break;
+
+
+
+                }
+            }
+        }
+        public  User Login()
+        {
+            Console.WriteLine("User Name: ");
+            string username = Console.ReadLine();
+            Console.WriteLine("Password: ");
+            string password = Console.ReadLine();
+            foreach (var user in _UserRegistry)
+            {
+                if (user._userName == username && user._passWord == password)
+                {
+                    return user;
+                }
+            }
+            return null;
+        }
+        static int? access(User user)
+        {
+            if (user is Customer)
+            {
+                return 1;
+            }
+            else if (user is Manager)
+            {
+                return 2;
+            }
+            else
+                return null;
+        }
         public void Add_acc(Account account)
         {
             if (_user is Customer kund && account is SavingsAccount acc)

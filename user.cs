@@ -46,7 +46,7 @@ namespace WealthSpecialists
             }
 
         }
-        public void Weiv_detailed_account_information(Account account)
+        public void Vei_detailed_account_information(Account account)
         {
             Console.WriteLine($"Account Name: {account._accountname}Current balance: {account._accountBalance}\nCurrent Debt: {account._LoanAmount}\nCurrency Type{account._currencyType} \nInterestrate: {account._interestRate}\nAccount ID {account._accountID}");
         }
