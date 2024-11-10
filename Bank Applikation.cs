@@ -16,6 +16,7 @@ namespace WealthSpecialists
         { new Manager("Raidar", "Bääst"),
         new Customer("Erik", "password")
         };
+
         public double _sek = 1;
         public double _dollar = 11;
         public double _euro = 12;
