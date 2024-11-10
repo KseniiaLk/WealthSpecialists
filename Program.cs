@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace WealthSpecialists
 {
@@ -54,18 +58,18 @@ namespace WealthSpecialists
             return null;
         }
 
-        private static int? access(User user)
-        {
-            if (user is Customer)
-            {
-                return 1;
-            }
-            else if (user is Manager)
-            {
-                return 2;
-            }
-            else
-                return null;
-        }
+        //        private static int? access(User user)
+        //        {
+        //            if (user is Customer)
+        //            {
+        //                return 1;
+        //            }
+        //            else if (user is Manager)
+        //            {
+        //                return 2;
+        //            }
+        //            else
+        //                return null;
+        //        }
     }
 }

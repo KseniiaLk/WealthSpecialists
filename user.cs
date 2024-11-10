@@ -204,51 +204,52 @@ namespace WealthSpecialists
                 Console.WriteLine($"New balance on account transferd from: {_accounts[input - 1]._accountBalance}.{_accounts[input - 1]._currencyType}\nNew balance on account transferd to: {_accounts[inputtwo - 1]._accountBalance}.{_accounts[input - 1]._currencyType}");
             }
 
-    }
-
-    public class Manager : User
-    {
-        public Manager(string userName, string passWord) : base(userName, passWord)
-        {
         }
 
-        // Creates a account, and returns it for use by the system. can for example be used by
-        // "Add_account" method under Coustomer
-        public Account Create_account(double balance, string currencyType)
+        public class Manager : User
         {
-            Account newAccount = new SavingsAccount(balance, currencyType);
-            return newAccount;
-        }
-
-        public void Add_user(Bank_Applikation bank)
-        {
-            Console.WriteLine("Vänligen skriv in ditt användarnamn");
-            string input = Console.ReadLine();
-            Console.WriteLine("Vänligen skriv in ditt lösenord");
-            string pwinput = Console.ReadLine();
-            Customer customer = new Customer(input, pwinput);
-            bank._UserRegistry.Add(customer);
-            Console.WriteLine($"Användaren: {input} har blivit skapad.");
-        }
-
-        public void UpdateCurrency(Bank_Applikation bank)
-        {
-            Console.WriteLine("Which currency would you like to update");
-            Console.WriteLine($"1: Dollar which is at the moment worth : {bank._dollar} in sek");
-            Console.WriteLine($"2: Euro which is at the moment worth : {bank._euro} in sek");
-
-            int.TryParse(Console.ReadLine(), out int input);
-            if (input == 1)
+            public Manager(string userName, string passWord) : base(userName, passWord)
             {
-                Console.WriteLine("Énter the new value for dollar in sek");
-                int.TryParse(Console.ReadLine(), out int inputDollar);
-                bank._dollar = inputDollar;
             }
-            if (input == 2)
+
+            // Creates a account, and returns it for use by the system. can for example be used by
+            // "Add_account" method under Coustomer
+            public Account Create_account(double balance, string currencyType)
             {
-                Console.WriteLine("Enter the new value for euro in sek");
-                int.TryParse(Console.ReadLine(), out int inputEuro);
-                bank._euro = inputEuro;
+                Account newAccount = new SavingsAccount(balance, currencyType);
+                return newAccount;
+            }
+
+            public void Add_user(Bank_Applikation bank)
+            {
+                Console.WriteLine("Vänligen skriv in ditt användarnamn");
+                string input = Console.ReadLine();
+                Console.WriteLine("Vänligen skriv in ditt lösenord");
+                string pwinput = Console.ReadLine();
+                Customer customer = new Customer(input, pwinput);
+                bank._UserRegistry.Add(customer);
+                Console.WriteLine($"Användaren: {input} har blivit skapad.");
+            }
+
+            public void UpdateCurrency(Bank_Applikation bank)
+            {
+                Console.WriteLine("Which currency would you like to update");
+                Console.WriteLine($"1: Dollar which is at the moment worth : {bank._dollar} in sek");
+                Console.WriteLine($"2: Euro which is at the moment worth : {bank._euro} in sek");
+
+                int.TryParse(Console.ReadLine(), out int input);
+                if (input == 1)
+                {
+                    Console.WriteLine("Énter the new value for dollar in sek");
+                    int.TryParse(Console.ReadLine(), out int inputDollar);
+                    bank._dollar = inputDollar;
+                }
+                if (input == 2)
+                {
+                    Console.WriteLine("Enter the new value for euro in sek");
+                    int.TryParse(Console.ReadLine(), out int inputEuro);
+                    bank._euro = inputEuro;
+                }
             }
         }
     }
