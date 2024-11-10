@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
+using static WealthSpecialists.Customer;
 namespace WealthSpecialists
 {
     public class Bank_Applikation
@@ -29,14 +33,14 @@ namespace WealthSpecialists
                     Console.WriteLine("Invalid username or password, please try again.");
                     continue;
                 }
-                int? userType = access(user);
-                switch (userType)
+                //int? userType = access(user);
+                switch (user)
                 {
-                    case 1:
+                    case Customer:
                         Customer_Menu((Customer)user);
                         break;
 
-                    case 2:
+                    case Manager:
                         Manager_Menu((Manager)user);
                         break;
 
