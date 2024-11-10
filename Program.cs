@@ -14,10 +14,10 @@ namespace WealthSpecialists
             while (true)
             {
                 Bank_Applikation applikation = new Bank_Applikation();
-                applikation._user=Loggin(applikation);
+                applikation.menu();
 
 
-                switch (access(applikation._user))
+               /* switch (access(applikation._user))
                 {
                     case 1:
                         Console.WriteLine("[1]KontoÖversikt");
@@ -41,7 +41,7 @@ namespace WealthSpecialists
 
 
 
-                }
+                }*/
 
 
             }
