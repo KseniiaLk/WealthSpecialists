@@ -1,29 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WealthSpecialists
 {
     public class Bank_Applikation
     {
-        
+        private Dictionary<string, User> _userRegistry = new Dictionary<string, User>();
+        public List<Account> userAccounts = new List<Account>();
 
-        Dictionary<string, User> _userRegistry = new Dictionary<string, User>();
-        public List<User> _UserRegistry = new List<User>
-        { new Manager("Raidar", "Bääst"),
-        new Customer("Erik", "password")
-        };
+        public List<User> _UserRegistry = new List<User> { new Manager("Raidar", "Bääst"), new Customer("Erik", "password") };
 
         public double _sek = 1;
         public double _dollar = 11;
         public double _euro = 12;
 
-        public User _user { get; set; }
-        public ICollection<Account> _accounts { get; set; }
-        public Account _account { get; set; }
+        //public User _user { get; set; }
+        // public ICollection<Account> _accounts { get; set; }
+        //public Account _account { get; set; }
 
         public void menu()
         {
@@ -42,15 +35,18 @@ namespace WealthSpecialists
                     case 1:
                         Customer_Menu((Customer)user);
                         break;
+
                     case 2:
                         Manager_Menu((Manager)user);
                         break;
+
                     default:
                         Console.WriteLine("Usertype not found.");
                         break;
                 }
             }
         }
+
         public void Manager_Menu(Manager manager)
         {
             while (true)
@@ -63,20 +59,23 @@ namespace WealthSpecialists
                 switch (input)
                 {
                     case 1:
-                        manager.Add_user(new UserService(this));
+                        manager.Add_user(this);
                         break;
+
                     case 2:
-                        //uppdatring av currency
+                        manager.UpdateCurrency(this);
                         break;
+
                     case 3:
                         return;
+
                     default:
                         Console.WriteLine("Invalid selection please try again.");
                         break;
-
                 }
             }
         }
+
         public void Customer_Menu(Customer customer)
         {
             while (true)
@@ -93,26 +92,31 @@ namespace WealthSpecialists
                     case 1:
                         customer.Veiw_accounts_information();
                         break;
+
                     case 2:
-                        //metod för överföring av pengar
+                        customer.Transfer(this);
                         break;
+
                     case 3:
                         Account newAccount = new SavingsAccount(1000, "SEK");
-                        Add_acc(newAccount);
+                        customer._accounts.Add(newAccount);
+                        Console.WriteLine("A new account has been created.");
+                        customer.Veiw_accounts_information();
+
                         break;
+
                     case 4:
-                        //customer.Request_loan();
-                        Console.WriteLine("Test");
+                        this.Request_loan(customer.Select_account("Choose account"));
                         break;
+
                     case 5:
                         return;
+
                     default:
                         Console.WriteLine("Invalid selection please try again.");
                         break;
-
                 }
             }
-
         }
 
         private static void Veiw_accounts_information(User user)
@@ -141,6 +145,7 @@ namespace WealthSpecialists
             if (double.TryParse(Console.ReadLine(), out double amount) && amount <= account._accountBalance * 5)
             {
                 Console.WriteLine($"You have Requested a loan of {amount} at {account._interestRate}, the total amount to be repayed will be {amount * (1 + (account._interestRate / 100))}");
+                account._accountBalance += amount;
                 return amount;
             }
             else
@@ -155,18 +160,11 @@ namespace WealthSpecialists
             Console.WriteLine($"Your account {account._accountID} currently has a interest rate of {account._interestRate} per annum");
         }
 
-        private void Add_acc(Account account)
-        {
-            if (_user is Customer customer && account is SavingsAccount acc)
-            {
-                customer.Add_account(account);
-                Console.WriteLine($"A new account has been added with an interest rate of {acc._interestRate} per Annum");
-            }
-            else
-            {
-                Console.WriteLine("your User prifile does not allowe accounts to be added, try switching accounts to accses this funtion");
-            }
-        }
+        //public void Add_account(Account account,Customer customer)
+        //{
+        //    customer._accounts.Add(account);
+
+        //}
 
         private static int? access(User user)
         {
@@ -181,7 +179,6 @@ namespace WealthSpecialists
             else
                 return null;
         }
-
 
         private User Login()
         {
@@ -214,7 +211,6 @@ namespace WealthSpecialists
             }
             Console.WriteLine("Conversion failed");
             return 0;
-
         }
     }
 }
