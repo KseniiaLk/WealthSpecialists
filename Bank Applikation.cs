@@ -62,8 +62,6 @@ namespace WealthSpecialists
                         //+ a counter to count number of logins for later
                         break;
 
-
-
                 }
             }
         }
