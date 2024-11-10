@@ -157,6 +157,7 @@ namespace WealthSpecialists
             {
                 Console.WriteLine($" {num}. {item._date} {item._previusBalance} {item._amountTransfered} Balance after transaction: {item._postBalance}");
             }
+
         }
 
         //Michaels bästa logik
@@ -202,14 +203,7 @@ namespace WealthSpecialists
                 Console.WriteLine("Transfer is done");
                 Console.WriteLine($"New balance on account transferd from: {_accounts[input - 1]._accountBalance}.{_accounts[input - 1]._currencyType}\nNew balance on account transferd to: {_accounts[inputtwo - 1]._accountBalance}.{_accounts[input - 1]._currencyType}");
             }
-        }
 
-        /*public void Add_History()
-        {
-            AccountHistory accountHistory = new AccountHistory();
-        }
-        future add accounthistory to list
-        */
     }
 
     public class Manager : User
