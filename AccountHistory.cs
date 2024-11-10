@@ -8,20 +8,15 @@ namespace WealthSpecialists
 {
     public class AccountHistory
     {
-        public int _amount { get; set; }
-        public string _currency { get; set; }
-        public DateTime _date = DateTime.Now;
-        public Guid _accountNumberFrom;
-        public Guid _accountNumberTo;
-
-        public AccountHistory(int amount, string currency, Guid accountNumberFrom, Guid accountNumberTo)
+        public AccountHistory(Account account, double amountTransfered)
         {
-            _amount = amount;
-            _currency = currency;
-            _accountNumberFrom = accountNumberFrom;
-            _accountNumberTo = accountNumberTo;
-
+            _previusBalance = account._accountBalance;
+            _amountTransfered = amountTransfered;
+            _postBalance = account._accountBalance + amountTransfered;
         }
-
+        public DateTime _date = DateTime.Now;
+        public double _previusBalance { get; set; }
+        public double _amountTransfered { get; set; }
+        public double _postBalance { get; set; }
     }
 }
