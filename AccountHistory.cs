@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace WealthSpecialists
 {
@@ -10,7 +14,6 @@ namespace WealthSpecialists
             _amountTransfered = amountTransfered;
             _postBalance = account._accountBalance + amountTransfered;
         }
-
         public DateTime _date = DateTime.Now;
         public double _previusBalance { get; set; }
         public double _amountTransfered { get; set; }
