@@ -21,7 +21,6 @@ namespace WealthSpecialists
         public double _dollar = 11;
         public double _euro = 12;
 
-
         public User _user { get; set; }
         public ICollection<Account> _accounts { get; set; }
         public Account _account { get; set; }
@@ -183,6 +182,7 @@ namespace WealthSpecialists
                 return null;
         }
 
+
         private User Login()
         {
             Console.WriteLine("User Name: ");
@@ -200,6 +200,7 @@ namespace WealthSpecialists
         }
 
         private double CurrencyConverter(Account account)
+
         {
             if (account._currencyType == "dollar")
             {

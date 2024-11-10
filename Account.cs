@@ -7,13 +7,18 @@ using System.Threading.Tasks;
 namespace WealthSpecialists
 {
      public abstract class Account
-    {
+     {
         public Account(double accountBalance, string currencyType)
         {
+
             _accountBalance = accountBalance;
             _accountID = Guid.NewGuid();
             _currencyType = currencyType;
+            
+            
         }
+
+        public int _accountNumber  = 1;
 
         public double _accountBalance = 0;
         public double _LoanAmount = 0;
@@ -21,6 +26,7 @@ namespace WealthSpecialists
         public Guid _accountID { get; set; }
         public string _currencyType { get; set; }
         public double _interestRate { get; set; }
+        public List<AccountHistory> _accounthistory { get; set; }
     }
     internal class SavingsAccount : Account
     {
