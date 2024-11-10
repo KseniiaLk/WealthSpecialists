@@ -14,6 +14,7 @@ namespace WealthSpecialists
         public double _sek = 1;
         public double _dollar = 11;
         public double _euro = 12;
+
         public User _user { get; set; }
         public ICollection<Account> _accounts { get; set; }
         public Account _account { get; set; }
@@ -68,7 +69,7 @@ namespace WealthSpecialists
             }
         }
 
-
+        
         public double CurrencyConverter(Account account)
         {
             if(account._currencyType == "dollar")

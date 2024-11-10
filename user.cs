@@ -36,12 +36,12 @@ namespace WealthSpecialists
         // Removes money from an account, sum is the amount
         public void Remove_money(Account account, double sum)
         {
-            account._accountBalance =- sum;
+            account._accountBalance -= sum;
         }
         // Adds money to an account, sum is the amount
         public void Add_money(Account account, double sum)
         {
-            account._accountBalance = +sum;
+            account._accountBalance += sum;
         }
         // display the acount names of the user
         public void Display_accounts()
@@ -74,9 +74,61 @@ namespace WealthSpecialists
             }
         }
         // adds a account to the list of accounts, can be used when creating accounts or when moving accounts
+
+        public Account Create_account(double balance, string currencyType)
+        {
+            Account newAccount = new SavingsAccount(balance, currencyType);
+            return newAccount;
+        }
+
+        public void TransferBetweenUsers(Bank_Applikation bankapp)
+        {
+            Console.WriteLine("From which account would you like to transfer money from?");
+            Veiw_accounts_information();
+            int.TryParse(Console.ReadLine(), out int accountFrom);
+            Account from = _accounts[accountFrom - 1]; // here we can use accountselector method when finished
+            Console.WriteLine("how much money would you like to send?");
+            int.TryParse(Console.ReadLine(), out int money);
+
+            if (from._accountBalance < money )
+            {
+                Console.WriteLine("Your account does not have enough balance"); //need to make a loop so user can input new sum
+                
+            }
+
+
+            Console.WriteLine("What is the username of person you would like to transfer money to?");
+            string transferTargetUser = Console.ReadLine();
+            Console.WriteLine("what accountnumber would you like to send money to");
+            int.TryParse(Console.ReadLine(), out int accounttarget);
+            foreach(User user in bankapp._UserRegistry)
+            {
+                if(transferTargetUser == user._userName) 
+                {
+                    if(user is Customer customer)
+                        foreach (var account in customer._accounts)
+                        {
+                            if(accounttarget == account._accountNumber)
+                            {
+                                customer.Add_money(account, money);
+                                this.Remove_money(from, money);      //  "this" will remove money from the user accessing method
+                                                                    //transferBetweenUsers tested this method it works, very nice
+                                                                    //just  need to add method to update transactionHistory
+                            }
+                            
+                        }
+                }
+                else
+                    Console.WriteLine("Username/account not found");
+            }
+         
+        }
+
         public void Add_account(Account account)
         {
             _accounts.Add(account);
+            
+
         }
         // veiw general information about user acount's (name, balance , currencytype)
         public void Veiw_accounts_information()
