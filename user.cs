@@ -203,8 +203,8 @@ namespace WealthSpecialists
                 Console.WriteLine("Transfer is done");
                 Console.WriteLine($"New balance on account transferd from: {_accounts[input - 1]._accountBalance}.{_accounts[input - 1]._currencyType}\nNew balance on account transferd to: {_accounts[inputtwo - 1]._accountBalance}.{_accounts[input - 1]._currencyType}");
             }
-
         }
+     }
 
         public class Manager : User
         {
@@ -251,6 +251,7 @@ namespace WealthSpecialists
                     bank._euro = inputEuro;
                 }
             }
-        }
-    }
-}
+        }  
+}  
+   
+
