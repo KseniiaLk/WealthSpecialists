@@ -4,6 +4,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
@@ -13,13 +14,44 @@ namespace WealthSpecialists
     {
         public List<User> _UserRegistry = new List<User> { new Manager("Raidar", "Bääst"), new Customer("Erik", "password") };
 
+        //new test stuff timers
+        public Timer _timer;
+        public bool _timerRunning = false;
+        //
+
         public double _sek = 1;
         public double _dollar = 11;
         public double _euro = 12;
+        public int _totalAccounts = 100;
 
+        Queue<Task> test = new Queue<Task>(); //tasks go in here
         
+        public async void  taskstarter(Queue<Task> queue)
+        {
+           
+            // if we for some reason end up here in this method again before taskstarter completes its tasks it will abort and restart timer so we dont have multiple taskstarters running
+            // async await should fix this since it waits for task to be completed before continueing and relooping (not sure)
+            if (_timerRunning) return;
+
+            _timerRunning = true;
+            while (queue.Count > 0)
+            {
+                
+                Task task = queue.Dequeue();
+                task.Start();
+                await task; //tasks are not gauranteed to run in order, by using await we make sure to start a task , wait untill its finished then rerun the whileloop and start the next task
+            }
+            Console.WriteLine("All tasks completed.");
+            _timerRunning = false;
+        }
+
+        public void TimerCallback(object state)
+        {
+            taskstarter(test);  // Call the taskstarter method when the timer elapses
+        }
         public void menu()
         {
+            _timer = new Timer(TimerCallback, null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(5)); // first time we start the meny we start timer starts goes to 1 minute then 5
             int limit = 0;
             while (limit < 4)
             {
@@ -96,6 +128,8 @@ namespace WealthSpecialists
         {
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine("Du är inloggad på : " + customer._userName);
                 Console.WriteLine("[1] Account overview");
                 Console.WriteLine("[2] Money transfer");
                 Console.WriteLine("[3] Create a new account");
@@ -107,9 +141,10 @@ namespace WealthSpecialists
                 {
                     case 1:
                         customer.View_acc();
+                        Console.ReadLine();
                         break;
 
-                    case 2:
+                    case 2:               
                         customer.Transfer(this);
                         break;
 
@@ -123,10 +158,14 @@ namespace WealthSpecialists
                         switch(accountType)
                         {
                             case 1:
-                                Account newAccount = new SavingsAccount(1000, "SEK");
-                                customer._accounts.Add(newAccount);
+                                Task task = new Task(() =>
+                                {  
+                                    customer.Create_account(1000, "SEK", this);
+                                 });
+
+                                test.Enqueue(task); //testing enqueue using create account
                                 Console.WriteLine("A new account has been created.");
-                                customer.View_acc();
+                               // customer.View_acc();
                                 break;
                             case 2:
                                 Console.WriteLine("Choose what currency you want to create the account in");
@@ -139,14 +178,14 @@ namespace WealthSpecialists
                                 switch (currency)
                                 {
                                     case 1:
-                                        Account newAccount2 = new ForeingCurrency(1000, "USD");
-                                        customer._accounts.Add(newAccount2);
+                                        customer.Create_Currencyaccount(1000, "USD", this);
+                                        
                                         Console.WriteLine("A new account with the currency [USD] has been created.");
                                         customer.View_acc();
                                         break;
                                     case 2:
-                                        Account newAccount3 = new ForeingCurrency(1000, "EUR");
-                                        customer._accounts.Add(newAccount3);
+                                        customer.Create_Currencyaccount(1000, "EUR", this);
+                                        
                                         Console.WriteLine("A new account with the currency [EUR] has been created.");
                                         customer.View_acc();
                                         break;

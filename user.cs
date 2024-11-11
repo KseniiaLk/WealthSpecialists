@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Principal;
+using System.Threading.Tasks;
 
 namespace WealthSpecialists
 {
@@ -36,7 +38,7 @@ namespace WealthSpecialists
 
         public void Add_money(Account account, double sum)
         {
-            account._accountBalance += sum;
+             account._accountBalance += sum;
         }
         public Account Select_account(string prompt)
         {
@@ -55,15 +57,19 @@ namespace WealthSpecialists
                 }
             }
         }
-        public Account Create_account(double balance, string currencyType)
+        public void Create_account(double balance, string currencyType, Bank_Application bank)
         {
-            Account newAccount = new SavingsAccount(balance, currencyType);
-            return newAccount;
+            Account newAccount = new SavingsAccount(balance, currencyType, bank._totalAccounts);
+            _accounts.Add(newAccount);
+            bank._totalAccounts++;
+
         }
-        public Account Create_Currencyaccount(double balance, string currencyType)
+        public void Create_Currencyaccount(double balance, string currencyType, Bank_Application bank)
         {
-            Account newAccount2 = new ForeingCurrency(balance, currencyType);
-            return newAccount2;
+            Account newAccount2 = new ForeingCurrency(balance, currencyType, bank._totalAccounts);
+            _accounts.Add(newAccount2);
+            bank._totalAccounts++;
+
         }
 
         public void TransferBetweenUsers(Bank_Application bankapp)
@@ -186,9 +192,9 @@ namespace WealthSpecialists
             {
             }
 
-            public Account Create_account(double balance, string currencyType)
+            public Account Create_account(double balance, string currencyType, int accountNumber)
             {
-                Account newAccount = new SavingsAccount(balance, currencyType);
+                Account newAccount = new SavingsAccount(balance, currencyType, accountNumber);
                 return newAccount;
             }
 

@@ -13,8 +13,10 @@ namespace WealthSpecialists
             while (true)
             {
                 Bank_Application applikation = new Bank_Application();
+                
                 applikation.menu();
             }
         }
+
     }
 }

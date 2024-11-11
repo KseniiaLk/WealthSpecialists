@@ -8,8 +8,9 @@ namespace WealthSpecialists
 {
     public abstract class Account
     {
-        public Account(double accountBalance, string currencyType)
+        public Account(double accountBalance, string currencyType, int accountNumber)
         {
+            _accountNumber = accountNumber;
             _accountBalance = accountBalance;
             _accountID = Guid.NewGuid();
             _currencyType = currencyType;
@@ -26,7 +27,7 @@ namespace WealthSpecialists
 
     internal class SavingsAccount : Account
     {
-        public SavingsAccount(double accountBalance, string currencyType) : base(accountBalance, currencyType)
+        public SavingsAccount(double accountBalance, string currencyType, int accountNumber) : base(accountBalance, currencyType, accountNumber)
         {
             _interestRate = 2.5;
         }
@@ -34,7 +35,7 @@ namespace WealthSpecialists
 
     internal class ForeingCurrency : Account
     {
-        public ForeingCurrency(double accountBalance, string currencyType) : base(accountBalance, currencyType)
+        public ForeingCurrency(double accountBalance, string currencyType,int accountNumber) : base(accountBalance, currencyType, accountNumber)
         {
         }
     }
