@@ -15,11 +15,9 @@ namespace WealthSpecialists
             _currencyType = currencyType;
         }
 
-        public int _accountNumber = 1;
-
         public double _accountBalance = 0;
         public double _LoanAmount = 0;
-        public string _accountname { get; set; }
+        public int _accountNumber = 1;
         public Guid _accountID { get; set; }
         public string _currencyType { get; set; }
         public double _interestRate { get; set; }
@@ -36,11 +34,8 @@ namespace WealthSpecialists
 
     internal class ForeingCurrency : Account
     {
-        public ForeingCurrency(double accountBalance, string currencyType, string currency) : base(accountBalance, currencyType)
+        public ForeingCurrency(double accountBalance, string currencyType) : base(accountBalance, currencyType)
         {
-            _currencyType = currency;
         }
-
-        public string _currencyType { get; set; }
     }
 }
