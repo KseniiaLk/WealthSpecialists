@@ -60,6 +60,11 @@ namespace WealthSpecialists
             Account newAccount = new SavingsAccount(balance, currencyType);
             return newAccount;
         }
+        public Account Create_Currencyaccount(double balance, string currencyType)
+        {
+            Account newAccount2 = new ForeingCurrency(balance, currencyType);
+            return newAccount2;
+        }
 
         public void TransferBetweenUsers(Bank_Application bankapp)
         {

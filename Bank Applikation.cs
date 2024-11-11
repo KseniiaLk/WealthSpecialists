@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace WealthSpecialists
@@ -14,16 +17,34 @@ namespace WealthSpecialists
         public double _dollar = 11;
         public double _euro = 12;
 
+        
         public void menu()
         {
-            while (true)
+            int limit = 0;
+            while (limit < 4)
             {
                 Console.WriteLine("[1]log in to account");
                 User user = Login();
                 if (user == null)
                 {
-                    Console.WriteLine("Invalid username or password, please try again.");
-                    continue;
+                    limit++;
+                    Console.WriteLine($"Invalid username or password, you have: {3-limit} attempts left .");
+                    if (limit == 3)
+                    {
+                        Console.WriteLine("To many failed attempts the program will now close.");
+                        limit = -1;
+                    
+                        if (limit == -1)
+                        { 
+                            Environment.Exit(0);
+                         }
+                        else
+                        {
+                            return;
+                        }
+
+                    }
+
                 }
                 switch (user)
                 {
@@ -36,7 +57,7 @@ namespace WealthSpecialists
                         break;
 
                     default:
-                        Console.WriteLine("Usertype not found.");
+                       
                         break;
                 }
             }
@@ -93,11 +114,51 @@ namespace WealthSpecialists
                         break;
 
                     case 3:
-                        Account newAccount = new SavingsAccount(1000, "SEK");
-                        customer._accounts.Add(newAccount);
-                        Console.WriteLine("A new account has been created.");
-                        customer.View_acc();
+                        Console.WriteLine("Select account type to create");
+                        Console.WriteLine("[1] Savings Account");
+                        Console.WriteLine("[2] ForeingCurrency Account");
+                        Console.WriteLine("[3] Return to Previous menu");
+                        int.TryParse(Console.ReadLine(), out int accountType);
 
+                        switch(accountType)
+                        {
+                            case 1:
+                                Account newAccount = new SavingsAccount(1000, "SEK");
+                                customer._accounts.Add(newAccount);
+                                Console.WriteLine("A new account has been created.");
+                                customer.View_acc();
+                                break;
+                            case 2:
+                                Console.WriteLine("Choose what currency you want to create the account in");
+                                Console.WriteLine("[1] $");
+                                Console.WriteLine("[2] €");
+                                Console.WriteLine("[3] Return to previous menu");
+                                int.TryParse(Console.ReadLine(), out int currency);
+
+
+                                switch (currency)
+                                {
+                                    case 1:
+                                        Account newAccount2 = new ForeingCurrency(1000, "USD");
+                                        customer._accounts.Add(newAccount2);
+                                        Console.WriteLine("A new account with the currency [USD] has been created.");
+                                        customer.View_acc();
+                                        break;
+                                    case 2:
+                                        Account newAccount3 = new ForeingCurrency(1000, "EUR");
+                                        customer._accounts.Add(newAccount3);
+                                        Console.WriteLine("A new account with the currency [EUR] has been created.");
+                                        customer.View_acc();
+                                        break;
+                                    case 3:
+                                        break;
+
+                                }
+                                break;
+                            case 3:
+                                break;
+
+                        }
                         break;
 
                     case 4:
