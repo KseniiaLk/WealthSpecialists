@@ -6,20 +6,13 @@ using System.Threading.Tasks;
 
 namespace WealthSpecialists
 {
-    public class Bank_Applikation
+    public class Bank_Application
     {
-        private Dictionary<string, User> _userRegistry = new Dictionary<string, User>();
-        public List<Account> userAccounts = new List<Account>();
-
         public List<User> _UserRegistry = new List<User> { new Manager("Raidar", "Bääst"), new Customer("Erik", "password") };
 
         public double _sek = 1;
         public double _dollar = 11;
         public double _euro = 12;
-
-        //public User _user { get; set; }
-        // public ICollection<Account> _accounts { get; set; }
-        //public Account _account { get; set; }
 
         public void menu()
         {
@@ -32,7 +25,6 @@ namespace WealthSpecialists
                     Console.WriteLine("Invalid username or password, please try again.");
                     continue;
                 }
-                //int? userType = access(user);
                 switch (user)
                 {
                     case Customer:
@@ -93,7 +85,7 @@ namespace WealthSpecialists
                 switch (input)
                 {
                     case 1:
-                        customer.Veiw_accounts_information();
+                        customer.View_acc();
                         break;
 
                     case 2:
@@ -104,7 +96,7 @@ namespace WealthSpecialists
                         Account newAccount = new SavingsAccount(1000, "SEK");
                         customer._accounts.Add(newAccount);
                         Console.WriteLine("A new account has been created.");
-                        customer.Veiw_accounts_information();
+                        customer.View_acc();
 
                         break;
 
@@ -121,66 +113,18 @@ namespace WealthSpecialists
                 }
             }
         }
-
-        private static void Veiw_accounts_information(User user)
+        public void Request_loan(Account account)
         {
-            if (user is Customer customer)
-            {
-                foreach (Account item in customer._accounts)
-                {
-                    Console.WriteLine($"Account: {item._accountname}\nBalance: {item._accountBalance} {item._currencyType}");
-                }
-            }
-            else
-            {
-                Console.WriteLine("User is not a customer, cannot veiw account information");
-            }
-        }
-
-        private static void Aprove_loan(Account account, double loan)
-        {
-            account._LoanAmount += loan;
-        }
-
-        public double Request_loan(Account account)
-        {
-            Console.WriteLine($"You can Loan a maximum amount of {account._accountBalance * 5} at an interest rate of {account._interestRate}% \n how much yould you like to Loan?: ");
+            Console.WriteLine($"You can loan a maximum amount of {account._accountBalance * 5} at an interest rate of {account._interestRate}% \n how much would you like to loan?: ");
             if (double.TryParse(Console.ReadLine(), out double amount) && amount <= account._accountBalance * 5)
             {
                 Console.WriteLine($"You have Requested a loan of {amount} at {account._interestRate}, the total amount to be repayed will be {amount * (1 + (account._interestRate / 100))}");
                 account._accountBalance += amount;
-                return amount;
             }
             else
             {
                 Console.WriteLine("your loan has been denied");
-                return 0;
             }
-        }
-
-        private static void Veiw_interest(Account account)
-        {
-            Console.WriteLine($"Your account {account._accountID} currently has a interest rate of {account._interestRate} per annum");
-        }
-
-        //public void Add_account(Account account,Customer customer)
-        //{
-        //    customer._accounts.Add(account);
-
-        //}
-
-        private static int? access(User user)
-        {
-            if (user is Customer)
-            {
-                return 1;
-            }
-            else if (user is Manager)
-            {
-                return 2;
-            }
-            else
-                return null;
         }
 
         private User Login()
@@ -202,7 +146,7 @@ namespace WealthSpecialists
         private double CurrencyConverter(Account account)
 
         {
-            if (account._currencyType == "dollar")
+            if (account._currencyType == "Dollar")
             {
                 double output = _dollar / account._accountBalance;
                 return output;
