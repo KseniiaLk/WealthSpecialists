@@ -13,24 +13,17 @@ namespace WealthSpecialists
     public class Bank_Application
     {
         public List<User> _UserRegistry = new List<User> { new Manager("Raidar", "Bääst"), new Customer("Erik", "password") };
-
-        //new test stuff timers
         public Timer _timer;
         public bool _timerRunning = false;
-        //
-
         public double _sek = 1;
         public double _dollar = 11;
         public double _euro = 12;
         public int _totalAccounts = 100;
 
-        public Queue<Task> test = new Queue<Task>(); //tasks go in here
+        public Queue<Task> test = new Queue<Task>(); 
         
         public async void  taskstarter(Queue<Task> queue)
         {
-           
-            // if we for some reason end up here in this method again before taskstarter completes its tasks it will abort and restart timer so we dont have multiple taskstarters running
-            // async await should fix this since it waits for task to be completed before continueing and relooping (not sure)
             if (_timerRunning) return;
 
             _timerRunning = true;
@@ -39,7 +32,7 @@ namespace WealthSpecialists
                 
                 Task task = queue.Dequeue();
                 task.Start();
-                await task; //tasks are not gauranteed to run in order, by using await we make sure to start a task , wait untill its finished then rerun the whileloop and start the next task
+                await task; 
             }
             Console.WriteLine("All tasks completed.");
             _timerRunning = false;
@@ -47,7 +40,7 @@ namespace WealthSpecialists
 
         public void TimerCallback(object state)
         {
-            taskstarter(test);  // Call the taskstarter method when the timer elapses
+            taskstarter(test); 
         }
         public void menu()
         {
