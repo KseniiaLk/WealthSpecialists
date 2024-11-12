@@ -49,8 +49,10 @@ namespace WealthSpecialists
         {
             taskstarter(test);  // Call the taskstarter method when the timer elapses
         }
+
         public void menu()
         {
+            Title();
             _timer = new Timer(TimerCallback, null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(5)); // first time we start the meny we start timer starts goes to 1 minute then 5
             int limit = 0;
             while (limit < 4)
@@ -81,10 +83,14 @@ namespace WealthSpecialists
                 switch (user)
                 {
                     case Customer:
+                        Console.Clear();
+                        Title();
                         Customer_Menu((Customer)user);
                         break;
 
                     case Manager:
+                        Console.Clear();
+                        Title();
                         Manager_Menu((Manager)user);
                         break;
 
@@ -99,9 +105,15 @@ namespace WealthSpecialists
         {
             while (true)
             {
-                Console.WriteLine("[1] Create new Customer");
-                Console.WriteLine("[2] Update currency");
-                Console.WriteLine("[3] Log out");
+                Console.WriteLine("═══════════════════════════════");
+                Console.WriteLine("[1]➤ Create new Customer");
+                Console.WriteLine("═══════════════════════════════");
+                Console.WriteLine("[2]➤ Update currency");
+                Console.WriteLine("═══════════════════════════════");
+                Console.WriteLine("[3]➤ Clear screen");
+                Console.WriteLine("═══════════════════════════════");
+                Console.WriteLine("[4]➤ Log out");
+                Console.WriteLine("═══════════════════════════════");
                 int.TryParse(Console.ReadLine(), out int input);
 
                 switch (input)
@@ -113,8 +125,11 @@ namespace WealthSpecialists
                     case 2:
                         manager.UpdateCurrency(this);
                         break;
-
                     case 3:
+                        Console.Clear();
+                        Title();
+                        break;
+                    case 4:
                         return;
 
                     default:
@@ -128,13 +143,21 @@ namespace WealthSpecialists
         {
             while (true)
             {
-                Console.Clear();
+                Console.WriteLine("═══════════════════════════════");
                 Console.WriteLine("Du är inloggad på : " + customer._userName);
-                Console.WriteLine("[1] Account overview");
-                Console.WriteLine("[2] Money transfer");
-                Console.WriteLine("[3] Create a new account");
-                Console.WriteLine("[4] Apply for loan");
-                Console.WriteLine("[5] Log out");
+                Console.WriteLine("═══════════════════════════════");
+                Console.WriteLine("[1]➤ Account overview");
+                Console.WriteLine("═══════════════════════════════");
+                Console.WriteLine("[2]➤ Money transfer");
+                Console.WriteLine("═══════════════════════════════");
+                Console.WriteLine("[3]➤ Create a new account");
+                Console.WriteLine("═══════════════════════════════");
+                Console.WriteLine("[4]➤ Apply for loan");
+                Console.WriteLine("═══════════════════════════════");
+                Console.WriteLine("[5]➤ Clear screen");
+                Console.WriteLine("═══════════════════════════════");
+                Console.WriteLine("[6]➤ Log out");
+                Console.WriteLine("═══════════════════════════════");
                 int.TryParse(Console.ReadLine(), out int input);
 
                 switch (input)
@@ -145,10 +168,17 @@ namespace WealthSpecialists
                         break;
 
                     case 2:
+                        Console.WriteLine("═══════════════════════════════");
                         Console.WriteLine("Would you like to:");
-                        Console.WriteLine("[1]Transfers money between your own accounts");
-                        Console.WriteLine("[2] Transfer to another user");
-                        Console.WriteLine("[3] Return to previous menu");
+                        Console.WriteLine("═══════════════════════════════");
+                        Console.WriteLine("[1]➤ Transfers money between your own accounts");
+                        Console.WriteLine("═══════════════════════════════");
+                        Console.WriteLine("[2]➤ Transfer to another user");
+                        Console.WriteLine("═══════════════════════════════");
+                        Console.WriteLine("[3]➤ Clear screen");
+                        Console.WriteLine("═══════════════════════════════");
+                        Console.WriteLine("[4]➤ Return to previous menu");
+                        Console.WriteLine("═══════════════════════════════");
                         int.TryParse(Console.ReadLine(), out int userchoice);
                         switch (userchoice)
                         {
@@ -158,8 +188,14 @@ namespace WealthSpecialists
                             case 2:
                                 customer.TransferBetweenUsers(this);
                                 break;
+                            case 3:
+                                Console.Clear();
+                                Title();
+                                 break;
                             default:
+                                Console.WriteLine("═══════════════════════════════");
                                 Console.WriteLine("Enter 1 or 2");
+                                Console.WriteLine("═══════════════════════════════");
                                 break;
 
                         }
@@ -167,10 +203,15 @@ namespace WealthSpecialists
                         break;
 
                     case 3:
+                        Console.WriteLine("═══════════════════════════════");
                         Console.WriteLine("Select account type to create");
-                        Console.WriteLine("[1] Savings Account");
-                        Console.WriteLine("[2] ForeingCurrency Account");
-                        Console.WriteLine("[3] Return to Previous menu");
+                        Console.WriteLine("═══════════════════════════════");
+                        Console.WriteLine("[1]➤ Savings Account");
+                        Console.WriteLine("═══════════════════════════════");
+                        Console.WriteLine("[2]➤ ForeingCurrency Account");
+                        Console.WriteLine("═══════════════════════════════");
+                        Console.WriteLine("[3]➤ Return to Previous menu");
+                        Console.WriteLine("═══════════════════════════════");
                         int.TryParse(Console.ReadLine(), out int accountType);
 
                         switch(accountType)
@@ -178,14 +219,19 @@ namespace WealthSpecialists
                             case 1:
                                 customer.Create_account(1000, "SEK", this);
                                 Console.WriteLine("A new account has been created.");
-                                    customer.View_acc();
+                                customer.View_acc();
                                 Console.WriteLine();
                                 break;
                             case 2:
+                                Console.WriteLine("═══════════════════════════════");
                                 Console.WriteLine("Choose what currency you want to create the account in");
-                                Console.WriteLine("[1] $");
-                                Console.WriteLine("[2] €");
-                                Console.WriteLine("[3] Return to previous menu");
+                                Console.WriteLine("═══════════════════════════════");
+                                Console.WriteLine("[1]➤ $");
+                                Console.WriteLine("═══════════════════════════════");
+                                Console.WriteLine("[2]➤ €");
+                                Console.WriteLine("═══════════════════════════════");
+                                Console.WriteLine("[3]➤ Return to previous menu");
+                                Console.WriteLine("═══════════════════════════════");
                                 int.TryParse(Console.ReadLine(), out int currency);
 
 
@@ -193,13 +239,12 @@ namespace WealthSpecialists
                                 {
                                     case 1:
                                         customer.Create_Currencyaccount(1000, "USD", this);
-                                        
                                         Console.WriteLine("A new account with the currency [USD] has been created.");
                                         customer.View_acc();
                                         break;
                                     case 2:
                                         customer.Create_Currencyaccount(1000, "EUR", this);
-                                        
+
                                         Console.WriteLine("A new account with the currency [EUR] has been created.");
                                         customer.View_acc();
                                         break;
@@ -215,7 +260,9 @@ namespace WealthSpecialists
                         break;
 
                     case 4:
+                        Console.WriteLine("═══════════════════════════════");
                         this.Request_loan(customer.Select_account("Choose account"));
+                        Console.WriteLine("═══════════════════════════════");
                         break;
 
                     case 5:
@@ -243,10 +290,12 @@ namespace WealthSpecialists
 
         private User Login()
         {
-            Console.WriteLine("User Name: ");
+            Console.WriteLine("═══════════════════════════════");
+            Console.Write("➤ User Name: ");
             string username = Console.ReadLine();
-            Console.WriteLine("Password: ");
+            Console.Write("➤ Password: ");
             string password = Console.ReadLine();
+            Console.WriteLine("═══════════════════════════════");
             foreach (var user in _UserRegistry)
             {
                 if (user._userName == username && user._passWord == password)
@@ -272,6 +321,19 @@ namespace WealthSpecialists
             }
             Console.WriteLine("Conversion failed");
             return 0;
+        }
+        public void Title()
+        {
+            string Title = (@"
+██╗    ██╗███████╗ █████╗ ██╗  ████████╗██╗  ██╗    ███████╗██████╗ ███████╗ ██████╗██╗ █████╗ ██╗     ██╗███████╗████████╗
+██║    ██║██╔════╝██╔══██╗██║  ╚══██╔══╝██║  ██║    ██╔════╝██╔══██╗██╔════╝██╔════╝██║██╔══██╗██║     ██║██╔════╝╚══██╔══╝
+██║ █╗ ██║█████╗  ███████║██║     ██║   ███████║    ███████╗██████╔╝█████╗  ██║     ██║███████║██║     ██║███████╗   ██║   
+██║███╗██║██╔══╝  ██╔══██║██║     ██║   ██╔══██║    ╚════██║██╔═══╝ ██╔══╝  ██║     ██║██╔══██║██║     ██║╚════██║   ██║   
+╚███╔███╔╝███████╗██║  ██║███████╗██║   ██║  ██║    ███████║██║     ███████╗╚██████╗██║██║  ██║███████╗██║███████║   ██║   
+ ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝   ╚═╝  ╚═╝    ╚══════╝╚═╝     ╚══════╝ ╚═════╝╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝   ╚═╝   
+                                                                                                                           
+        ");
+            Console.WriteLine(Title);
         }
     }
 }
