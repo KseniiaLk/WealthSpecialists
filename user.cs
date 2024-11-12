@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WealthSpecialists
 {
@@ -22,7 +23,7 @@ namespace WealthSpecialists
 
     public class Customer : User
     {
-        public List<Account> _accounts = new List<Account>();
+        public List<Account> customer_accounts = new List<Account>();
 
         public Customer(string userName, string passWord) : base(userName, passWord)
         {
@@ -47,9 +48,9 @@ namespace WealthSpecialists
             int choise;
             while (true)
             {
-                if (int.TryParse(Console.ReadLine(), out choise) && choise > 0 && choise < _accounts.Count)
+                if (int.TryParse(Console.ReadLine(), out choise) && choise > 0 && choise < customer_accounts.Count)
                 {
-                    return _accounts[choise - 1];
+                    return customer_accounts[choise - 1];
                 }
                 else
                 {
@@ -60,24 +61,47 @@ namespace WealthSpecialists
         public void Create_account(double balance, string currencyType, Bank_Application bank)
         {
             Account newAccount = new SavingsAccount(balance, currencyType, bank._totalAccounts);
-            _accounts.Add(newAccount);
+            customer_accounts.Add(newAccount);
             bank._totalAccounts++;
 
         }
         public void Create_Currencyaccount(double balance, string currencyType, Bank_Application bank)
         {
             Account newAccount2 = new ForeingCurrency(balance, currencyType, bank._totalAccounts);
-            _accounts.Add(newAccount2);
+            customer_accounts.Add(newAccount2);
             bank._totalAccounts++;
 
         }
 
+        public void transferBetweenUsersLogic(Bank_Application bankapp, string transferTargetUser, int accounttarget, Account from, int money)
+        {
+            Customer Origin = this;
+            foreach (User user in bankapp._UserRegistry)
+            {
+                if (transferTargetUser == user._userName)
+                {
+                    if (user is Customer customer)
+                        foreach (var account in customer.customer_accounts)
+                        {
+                            if (accounttarget == account._accountNumber)
+                            {
+                                customer.Add_money(account, money);
+                                Origin.Remove_money(from, money);      //  "this" will remove money from the user accessing method
+                                                                     //transferBetweenUsers tested this method it works, very nice
+                                                                     //just  need to add method to update transactionHistory
+                            }
+                        }
+                }
+                else
+                    Console.WriteLine("Username/account not found");
+            }
+        }
         public void TransferBetweenUsers(Bank_Application bankapp)
         {
             Console.WriteLine("From which account would you like to transfer money from?");
             View_acc();
             int.TryParse(Console.ReadLine(), out int accountFrom);
-            Account from = _accounts[accountFrom - 1]; // here we can use accountselector method when finished
+            Account from = customer_accounts[accountFrom - 1]; // here we can use accountselector method when finished
             Console.WriteLine("how much money would you like to send?");
             int.TryParse(Console.ReadLine(), out int money);
 
@@ -90,31 +114,18 @@ namespace WealthSpecialists
             string transferTargetUser = Console.ReadLine();
             Console.WriteLine("what accountnumber would you like to send money to");
             int.TryParse(Console.ReadLine(), out int accounttarget);
-            foreach (User user in bankapp._UserRegistry)
+
+            Task task = new Task(() =>
             {
-                if (transferTargetUser == user._userName)
-                {
-                    if (user is Customer customer)
-                        foreach (var account in customer._accounts)
-                        {
-                            if (accounttarget == account._accountNumber)
-                            {
-                                customer.Add_money(account, money);
-                                this.Remove_money(from, money);      //  "this" will remove money from the user accessing method
-                                                                     //transferBetweenUsers tested this method it works, very nice
-                                                                     //just  need to add method to update transactionHistory
-                            }
-                        }
-                }
-                else
-                    Console.WriteLine("Username/account not found");
-            }
+                transferBetweenUsersLogic(bankapp, transferTargetUser, accounttarget, from,money);
+            });
+            bankapp.test.Enqueue(task);
         }
 
         public void View_acc()
         {
             int num = 1;
-            foreach (Account item in _accounts)
+            foreach (Account item in customer_accounts)
             {
                 Console.WriteLine($"Account: {num} {item._accountNumber} Balance: {item._accountBalance} {item._currencyType}");
                 num++;
@@ -141,6 +152,34 @@ namespace WealthSpecialists
             }
 
         }
+        
+        public void TransferLogic(int input, int inputtwo, int inputthree, Bank_Application _bankApp)
+        {
+            Customer customer = this;
+             if (customer_accounts[inputtwo - 1] is ForeingCurrency)
+            {
+                if (customer_accounts[input - 1]._currencyType == "$")
+                {
+                    double output = inputthree / _bankApp._dollar;
+                    customer_accounts[inputtwo - 1]._accountBalance += output;
+                    customer_accounts[input - 1]._accountBalance -= inputthree;
+                }
+                else if (customer_accounts[input - 1]._currencyType == "€")
+                {
+                    double output = inputthree / _bankApp._euro;
+                    customer_accounts[inputtwo - 1]._accountBalance += output;
+                    customer_accounts[input - 1]._accountBalance -= inputthree;
+                }
+            }
+            else if (inputthree <= customer_accounts[input - 1]._accountBalance)
+
+            {
+                
+                customer_accounts[input - 1]._accountBalance -= inputthree;
+                customer_accounts[inputtwo - 1]._accountBalance += inputthree;
+                
+            }
+        }
         public void Transfer(Bank_Application _bankApp)
         {
             View_acc();
@@ -155,34 +194,15 @@ namespace WealthSpecialists
             }
             Console.WriteLine("How much money would you like to transfer?");
             int.TryParse(Console.ReadLine(), out int inputthree);
-            if (inputthree > _accounts[input - 1]._accountBalance)
+            if (inputthree > customer_accounts[input - 1]._accountBalance)
             {
                 Console.WriteLine("Still not enough money");
             }
-            else if (_accounts[inputtwo - 1] is ForeingCurrency)
+            Task task = new Task(() =>
             {
-                if (_accounts[input - 1]._currencyType == "$")
-                {
-                    double output = inputthree / _bankApp._dollar;
-                    _accounts[inputtwo - 1]._accountBalance += output;
-                    _accounts[input - 1]._accountBalance -= inputthree;
-                }
-                else if (_accounts[input - 1]._currencyType == "€")
-                {
-                    double output = inputthree / _bankApp._euro;
-                    _accounts[inputtwo - 1]._accountBalance += output;
-                    _accounts[input - 1]._accountBalance -= inputthree;
-                }
-            }
-            else if (inputthree <= _accounts[input - 1]._accountBalance)
-
-            {
-                Console.WriteLine("You can transfer");
-                _accounts[input - 1]._accountBalance -= inputthree;
-                _accounts[inputtwo - 1]._accountBalance += inputthree;
-                Console.WriteLine("Transfer is done");
-                Console.WriteLine($"New balance on account transferd from: {_accounts[input - 1]._accountBalance}.{_accounts[input - 1]._currencyType}\nNew balance on account transferd to: {_accounts[inputtwo - 1]._accountBalance}.{_accounts[input - 1]._currencyType}");
-            }
+                TransferLogic(input, inputtwo, inputthree, _bankApp);
+            });
+            _bankApp.test.Enqueue(task);
         }
      }
 

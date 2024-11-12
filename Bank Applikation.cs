@@ -24,7 +24,7 @@ namespace WealthSpecialists
         public double _euro = 12;
         public int _totalAccounts = 100;
 
-        Queue<Task> test = new Queue<Task>(); //tasks go in here
+        public Queue<Task> test = new Queue<Task>(); //tasks go in here
         
         public async void  taskstarter(Queue<Task> queue)
         {
@@ -144,8 +144,26 @@ namespace WealthSpecialists
                         Console.ReadLine();
                         break;
 
-                    case 2:               
-                        customer.Transfer(this);
+                    case 2:
+                        Console.WriteLine("Would you like to:");
+                        Console.WriteLine("[1]Transfers money between your own accounts");
+                        Console.WriteLine("[2] Transfer to another user");
+                        Console.WriteLine("[3] Return to previous menu");
+                        int.TryParse(Console.ReadLine(), out int userchoice);
+                        switch (userchoice)
+                        {
+                            case 1:
+                                customer.Transfer(this);
+                                break;
+                            case 2:
+                                customer.TransferBetweenUsers(this);
+                                break;
+                            default:
+                                Console.WriteLine("Enter 1 or 2");
+                                break;
+
+                        }
+                        
                         break;
 
                     case 3:
@@ -158,14 +176,10 @@ namespace WealthSpecialists
                         switch(accountType)
                         {
                             case 1:
-                                Task task = new Task(() =>
-                                {  
-                                    customer.Create_account(1000, "SEK", this);
-                                 });
-
-                                test.Enqueue(task); //testing enqueue using create account
+                                customer.Create_account(1000, "SEK", this);
                                 Console.WriteLine("A new account has been created.");
-                               // customer.View_acc();
+                                    customer.View_acc();
+                                Console.WriteLine();
                                 break;
                             case 2:
                                 Console.WriteLine("Choose what currency you want to create the account in");
