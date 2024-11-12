@@ -29,8 +29,6 @@ namespace WealthSpecialists
         {
         }
 
-        // Both methods below can be added togeter to create Logic for transfering money
-        // Ither seperatly or combined in another method
 
         public void Remove_money(Account account, double sum)
         {
@@ -86,14 +84,11 @@ namespace WealthSpecialists
                             if (accounttarget == account._accountNumber)
                             {
                                 customer.Add_money(account, money);
-                                Origin.Remove_money(from, money);      //  "this" will remove money from the user accessing method
-                                                                     //transferBetweenUsers tested this method it works, very nice
-                                                                     //just  need to add method to update transactionHistory
+                                Origin.Remove_money(from, money);     
                             }
                         }
                 }
-                else
-                    Console.WriteLine("Username/account not found");
+                    
             }
         }
         public void TransferBetweenUsers(Bank_Application bankapp)
@@ -101,13 +96,13 @@ namespace WealthSpecialists
             Console.WriteLine("From which account would you like to transfer money from?");
             View_acc();
             int.TryParse(Console.ReadLine(), out int accountFrom);
-            Account from = customer_accounts[accountFrom - 1]; // here we can use accountselector method when finished
+            Account from = customer_accounts[accountFrom - 1]; 
             Console.WriteLine("how much money would you like to send?");
             int.TryParse(Console.ReadLine(), out int money);
 
             if (from._accountBalance < money)
             {
-                Console.WriteLine("Your account does not have enough balance"); //need to make a loop so user can input new sum
+                Console.WriteLine("Your account does not have enough balance"); 
             }
 
             Console.WriteLine("What is the username of person you would like to transfer money to?");
