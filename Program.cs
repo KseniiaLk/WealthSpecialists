@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WealthSpecialists
 {
@@ -10,13 +6,13 @@ namespace WealthSpecialists
     {
         private static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             while (true)
             {
                 Bank_Application applikation = new Bank_Application();
-                
+
                 applikation.menu();
             }
         }
-
     }
 }

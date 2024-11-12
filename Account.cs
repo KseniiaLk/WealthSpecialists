@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WealthSpecialists
 {
@@ -35,7 +32,7 @@ namespace WealthSpecialists
 
     internal class ForeingCurrency : Account
     {
-        public ForeingCurrency(double accountBalance, string currencyType,int accountNumber) : base(accountBalance, currencyType, accountNumber)
+        public ForeingCurrency(double accountBalance, string currencyType, int accountNumber) : base(accountBalance, currencyType, accountNumber)
         {
         }
     }
