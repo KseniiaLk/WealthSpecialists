@@ -155,11 +155,11 @@ namespace WealthSpecialists
                     case 1:
                         Console.Clear();
                         Title();
-                        customer.View_acc();
                         Console.WriteLine("═══════════════════════════════");
                         Console.WriteLine("Would you like to see a detailed overview");
                         Console.WriteLine("Press the number corresponding to the account.");
                         Console.WriteLine("═══════════════════════════════");
+                        customer.View_acc();
                         Console.WriteLine("Press enter to return");
                         int.TryParse(Console.ReadLine(), out int inputcust);
                         Console.WriteLine("═══════════════════════════════");
