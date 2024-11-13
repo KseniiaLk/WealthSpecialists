@@ -120,6 +120,8 @@ namespace WealthSpecialists
                         break;
 
                     case 4:
+                        Console.Clear();
+                        Title();
                         return;
 
                     default:
@@ -138,15 +140,17 @@ namespace WealthSpecialists
                 Console.WriteLine("═══════════════════════════════");
                 Console.WriteLine("[1]➤ Account overview");
                 Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[2]➤ Money transfer");
+                Console.WriteLine("[2]➤View Account History");
                 Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[3]➤ Create a new account");
+                Console.WriteLine("[3]➤ Money transfer");
                 Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[4]➤ Apply for loan");
+                Console.WriteLine("[4]➤ Create a new account");
                 Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[5]➤ Clear screen");
+                Console.WriteLine("[5]➤ Apply for loan");
                 Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[6]➤ Log out");
+                Console.WriteLine("[6]➤ Clear screen");
+                Console.WriteLine("═══════════════════════════════");
+                Console.WriteLine("[7]➤ Log out");
                 Console.WriteLine("═══════════════════════════════");
                 int.TryParse(Console.ReadLine(), out int input);
 
@@ -181,8 +185,37 @@ namespace WealthSpecialists
                         Console.Clear();
                         Title();
                         break;
-
                     case 2:
+                        Console.Clear();
+                        Title();
+                        customer.View_acc();
+                        Console.WriteLine("═══════════════════════════════");
+                        Console.WriteLine("Would you like to see account history");
+                        Console.WriteLine("Press the number corresponding to the account.");
+                        Console.WriteLine("═══════════════════════════════");
+                        Console.WriteLine("Press enter to return");
+                        int.TryParse(Console.ReadLine(), out int inputhis);
+                        Console.WriteLine("═══════════════════════════════");
+                        if (inputhis == 0)
+                            break;
+                        try
+                        {
+                            Console.Clear();
+                            Title();
+                            customer.View_acc_history(customer.customer_accounts[inputhis - 1]);
+                        }
+                        catch (Exception e)
+                        {
+
+                            Console.WriteLine(e.Message);
+                        }
+                        Console.WriteLine("Press enter to return to menu");
+                        Console.ReadLine();
+                        Console.Clear();
+                        Title();
+                        break;
+
+                    case 3:
                         Console.WriteLine("═══════════════════════════════");
                         Console.WriteLine("Would you like to:");
                         Console.WriteLine("═══════════════════════════════");
@@ -219,7 +252,7 @@ namespace WealthSpecialists
 
                         break;
 
-                    case 3:
+                    case 4:
                         Console.Clear();
                         Title();
                         Console.WriteLine("═══════════════════════════════");
@@ -307,7 +340,7 @@ namespace WealthSpecialists
                         }
                         break;
 
-                    case 4:
+                    case 5:
                         Console.Clear();
                         Title();
                         this.Request_loan(customer.Select_account("Choose account"));
@@ -327,12 +360,12 @@ namespace WealthSpecialists
                         break;
                         
 
-                    case 5:
+                    case 6:
                         Console.Clear();
                         Title();
                         break;
 
-                    case 6:
+                    case 7:
                         return;
 
                     default:
