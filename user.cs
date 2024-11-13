@@ -130,7 +130,7 @@ namespace WealthSpecialists
             foreach (Account item in customer_accounts)
             {
                 if (item is SavingsAccount)
-                    Console.WriteLine($"Account: {num} {item._accountNumber} Balance: {item._accountBalance:F} {item._currencyType}, Intrest {item._interestRate:F}%");
+                    Console.WriteLine($"Account: {num} {item._accountNumber} Balance: {item._accountBalance:F} {item._currencyType}, Intrest {item._interestRate:F} %");
                 else
                     Console.WriteLine($"Account: {num} {item._accountNumber} Balance: {item._accountBalance:F} {item._currencyType}");
                 num++;
@@ -141,7 +141,7 @@ namespace WealthSpecialists
 
         {
             Console.WriteLine("═══════════════════════════════");
-            Console.WriteLine($"Account Name: {account._accountNumber}\nCurrent balance: {account._accountBalance:F}\nCurrent Debt: {account._LoanAmount}\nCurrency Type: {account._currencyType} \nInterestrate: {account._interestRate}\nAccount ID {account._accountID}");
+            Console.WriteLine($"Account Name: {account._accountNumber}\nCurrent balance: {account._accountBalance:F}\nCurrent Debt: {account._LoanAmount}\nCurrency Type: {account._currencyType} \nInterestrate: {account._interestRate:F} %\nAccount ID {account._accountID}");
             Console.WriteLine("═══════════════════════════════");
         }
 
