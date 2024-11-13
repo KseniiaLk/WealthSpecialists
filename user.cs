@@ -62,6 +62,20 @@ namespace WealthSpecialists
             }
         }
 
+        public void Log_transaction(Account account, double amountTrensfered) //behöver kontroleras mot metoderna den används i för att se om inputen är positiv eller negativ
+        {
+            AccountHistory history = new AccountHistory(account, amountTrensfered);
+            account._accounthistory.Add(history);
+
+        }
+        public void veiw_accountHitory(Account account)
+        { 
+            foreach (AccountHistory item in account._accounthistory)
+            {
+                Console.WriteLine($"{item._date}: previous balance: {item._previousBalance} transfered {item._amountTransfered} new balance{item._postBalance}");
+            }
+        }
+
         public void Create_account(double balance, string currencyType, Bank_Application bank)
         {
             Account newAccount = new SavingsAccount(balance, currencyType, bank._totalAccounts);
@@ -155,10 +169,6 @@ namespace WealthSpecialists
             Console.WriteLine("═══════════════════════════════");
         }
 
-        public void Log_transaction(Account account, double transfer)
-        {
-            account._accounthistory.Add(new AccountHistory(account, transfer));
-        }
 
         public void View_acc_history(Account account)
         {
