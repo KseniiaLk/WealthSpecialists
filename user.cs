@@ -133,6 +133,10 @@ namespace WealthSpecialists
         public void View_acc()
         {
             int num = 1;
+            if (_accounts.Count ==0)
+            {
+                Console.WriteLine("You have no accounts");
+            }
             foreach (Account item in _accounts)
             {
                 if (item is SavingsAccount)
