@@ -45,7 +45,7 @@ namespace WealthSpecialists
             int choise;
             while (true)
             {
-                if (int.TryParse(Console.ReadLine(), out choise) && choise > 0 && choise < customer_accounts.Count)
+                if (int.TryParse(Console.ReadLine(), out choise) && choise > 0 && choise <= customer_accounts.Count)
                 {
                     return customer_accounts[choise - 1];
                 }
