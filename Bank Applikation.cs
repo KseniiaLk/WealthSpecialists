@@ -169,7 +169,7 @@ namespace WealthSpecialists
                         {
                             Console.Clear();
                             Title();
-                            customer.View_detailed(customer.customer_accounts[inputcust - 1]);
+                            customer.View_detailed(customer._accounts[inputcust - 1]);
                         }
                         catch (Exception e)
                         {
@@ -317,7 +317,7 @@ namespace WealthSpecialists
                             break;
                         try
                         {
-                            customer.View_detailed(customer.customer_accounts[inputreturn - 1]);
+                            customer.View_detailed(customer._accounts[inputreturn - 1]);
                         }
                         catch (Exception e)
                         {

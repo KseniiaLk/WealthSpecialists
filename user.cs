@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace WealthSpecialists
@@ -22,7 +23,7 @@ namespace WealthSpecialists
 
     public class Customer : User
     {
-        public List<Account> customer_accounts = new List<Account>();
+        public List<Account> _accounts = new List<Account>();
 
         public Customer(string userName, string passWord) : base(userName, passWord)
         {
@@ -45,9 +46,14 @@ namespace WealthSpecialists
             int choise;
             while (true)
             {
-                if (int.TryParse(Console.ReadLine(), out choise) && choise > 0 && choise <= customer_accounts.Count)
+                if (int.TryParse(Console.ReadLine(), out choise) && choise > 0 && choise <= _accounts.Count)
                 {
-                    return customer_accounts[choise - 1];
+                    return _accounts[choise - 1];
+                }
+                else if (_accounts.Count == 0)
+                {
+                    Console.WriteLine("you have no accounts");
+                    return null;
                 }
                 else
                 {
@@ -59,14 +65,14 @@ namespace WealthSpecialists
         public void Create_account(double balance, string currencyType, Bank_Application bank)
         {
             Account newAccount = new SavingsAccount(balance, currencyType, bank._totalAccounts);
-            customer_accounts.Add(newAccount);
+            _accounts.Add(newAccount);
             bank._totalAccounts++;
         }
 
         public void Create_Currencyaccount(double balance, string currencyType, Bank_Application bank)
         {
             Account newAccount2 = new ForeingCurrency(balance, currencyType, bank._totalAccounts);
-            customer_accounts.Add(newAccount2);
+            _accounts.Add(newAccount2);
             bank._totalAccounts++;
         }
 
@@ -78,7 +84,7 @@ namespace WealthSpecialists
                 if (transferTargetUser == user._userName)
                 {
                     if (user is Customer customer)
-                        foreach (var account in customer.customer_accounts)
+                        foreach (var account in customer._accounts)
                         {
                             if (accounttarget == account._accountNumber)
                             {
@@ -95,7 +101,7 @@ namespace WealthSpecialists
             Console.WriteLine("From which account would you like to transfer money from?");
             View_acc();
             int.TryParse(Console.ReadLine(), out int accountFrom);
-            Account from = customer_accounts[accountFrom - 1];
+            Account from = _accounts[accountFrom - 1];
             Console.WriteLine("how much money would you like to send?");
             int.TryParse(Console.ReadLine(), out int money);
 
@@ -127,7 +133,7 @@ namespace WealthSpecialists
         public void View_acc()
         {
             int num = 1;
-            foreach (Account item in customer_accounts)
+            foreach (Account item in _accounts)
             {
                 if (item is SavingsAccount)
                     Console.WriteLine($"Account: {num} {item._accountNumber} Balance: {item._accountBalance:F} {item._currencyType}, Intrest {item._interestRate:F} %");
@@ -162,26 +168,26 @@ namespace WealthSpecialists
         public void TransferLogic(int input, int inputtwo, int inputthree, Bank_Application _bankApp)
         {
             Customer customer = this;
-            if (customer_accounts[inputtwo - 1] is ForeingCurrency)
+            if (_accounts[inputtwo - 1] is ForeingCurrency)
             {
-                if (customer_accounts[inputtwo - 1]._currencyType == "USD")
+                if (_accounts[inputtwo - 1]._currencyType == "USD")
                 {
                     double output = inputthree / _bankApp._dollar;
-                    customer_accounts[inputtwo - 1]._accountBalance += output;
-                    customer_accounts[input - 1]._accountBalance -= inputthree;
+                    _accounts[inputtwo - 1]._accountBalance += output;
+                    _accounts[input - 1]._accountBalance -= inputthree;
                 }
-                else if (customer_accounts[inputtwo - 1]._currencyType == "EUR")
+                else if (_accounts[inputtwo - 1]._currencyType == "EUR")
                 {
                     double output = inputthree / _bankApp._euro;
-                    customer_accounts[inputtwo - 1]._accountBalance += output;
-                    customer_accounts[input - 1]._accountBalance -= inputthree;
+                    _accounts[inputtwo - 1]._accountBalance += output;
+                    _accounts[input - 1]._accountBalance -= inputthree;
                 }
             }
-            else if (inputthree <= customer_accounts[input - 1]._accountBalance)
+            else if (inputthree <= _accounts[input - 1]._accountBalance)
 
             {
-                customer_accounts[input - 1]._accountBalance -= inputthree;
-                customer_accounts[inputtwo - 1]._accountBalance += inputthree;
+                _accounts[input - 1]._accountBalance -= inputthree;
+                _accounts[inputtwo - 1]._accountBalance += inputthree;
             }
         }
 
@@ -199,7 +205,7 @@ namespace WealthSpecialists
             }
             Console.WriteLine("How much money would you like to transfer?");
             int.TryParse(Console.ReadLine(), out int inputthree);
-            if (inputthree > customer_accounts[input - 1]._accountBalance)
+            if (inputthree > _accounts[input - 1]._accountBalance)
             {
                 Console.WriteLine("Still not enough money");
             }
