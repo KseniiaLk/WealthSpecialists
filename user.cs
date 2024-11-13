@@ -92,37 +92,88 @@ namespace WealthSpecialists
 
         public void TransferBetweenUsers(Bank_Application bankapp)
         {
-            Console.WriteLine("From which account would you like to transfer money from?");
+            if (customer_accounts.Count == 0) //if user has no bankaccounts write it to console then exit method
+            {
+                Console.WriteLine("You have no bank accounts, Press Enter to return to meny");
+                Console.ReadLine();
+                return;
+            }
+            
+            Console.WriteLine("From which account would you like to transfer money from? Press Enter to return to menu");
             View_acc();
             int.TryParse(Console.ReadLine(), out int accountFrom);
-            Account from = customer_accounts[accountFrom - 1];
+            if (accountFrom == 0)
+                return;
+            Account from;
+            try
+            {
+                 from = customer_accounts[accountFrom - 1];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                
+                Console.WriteLine("Enter a number from 1 to " + customer_accounts.Count());// if user inputs wrong number restart method = gets to input number again
+                TransferBetweenUsers(bankapp);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An unexpected error occurred: " + ex.Message); // catches all other errors and exits method and returns to meny
+                return;
+            }
+            
             Console.WriteLine("how much money would you like to send?");
             int.TryParse(Console.ReadLine(), out int money);
 
-            if (from._accountBalance < money)
+            while (from._accountBalance < money) //reruns loop untill user put in amount below total of balance
             {
-                Console.WriteLine("Your account does not have enough balance");
+                Console.WriteLine("Your account does not have enough balance"); 
+                Console.WriteLine("how much money would you like to send? Press Enter or 0 to return to meny");
+                int.TryParse(Console.ReadLine(), out money);
+                if (money == 0) 
+                    return;
+
             }
 
             Console.WriteLine("What is the username of person you would like to transfer money to?");
             string transferTargetUser = Console.ReadLine();
             Console.WriteLine("what accountnumber would you like to send money to");
-            //IEnumerable<User> readuser = bankapp._UserRegistry;
-            //foreach (User item in readuser)
-            //{
-            //    if (transferTargetUser == item._userName)
-            //            if(item is Customer customer)
-            //            Console.WriteLine(customer.customer_accounts);
-
-            //}
             int.TryParse(Console.ReadLine(), out int accounttarget);
 
-            Task task = new Task(() =>
+            bool success = false;
+            IEnumerable<User> readuser = bankapp._UserRegistry; // check if username and accountnumber exists set bool to true
+            foreach (User item in readuser)
             {
+                if (transferTargetUser == item._userName)
+                {
+                    Customer cust = (Customer)item;
+                    foreach (var account in cust.customer_accounts)
+                        if (accounttarget == account._accountNumber)
+                        {
+                            Console.WriteLine("Transfer in progress");
+                            success = true;
+                        }
+
+                
+                }
+
+            }
+           
+
+            if(success == true) // if username/accountnumber found add to task
+            { 
+                Task task = new Task(() =>
+                {
                 transferBetweenUsersLogic(bankapp, transferTargetUser, accounttarget, from, money);
-            });
-            bankapp.test.Enqueue(task);
-        }
+                });
+                bankapp.test.Enqueue(task);
+             }
+            else
+            { 
+                Console.WriteLine("Transfer failed could not find username/accountnumber, press Enter to return to menu");
+                Console.ReadLine();
+            }
+    }
 
         public void View_acc()
         {
@@ -130,9 +181,9 @@ namespace WealthSpecialists
             foreach (Account item in customer_accounts)
             {
                 if (item is SavingsAccount)
-                    Console.WriteLine($"Account: {num} {item._accountNumber} Balance: {item._accountBalance:F} {item._currencyType}, Intrest {item._interestRate:F}%");
+                    Console.WriteLine($"Account: {num} Accountnumber: {item._accountNumber} Balance: {item._accountBalance:F} {item._currencyType}, Intrest {item._interestRate:F}%");
                 else
-                    Console.WriteLine($"Account: {num} {item._accountNumber} Balance: {item._accountBalance:F} {item._currencyType}");
+                    Console.WriteLine($"Account: {num} Accountnumber: {item._accountNumber} Balance: {item._accountBalance:F} {item._currencyType}");
                 num++;
             }
         }
@@ -141,7 +192,7 @@ namespace WealthSpecialists
 
         {
             Console.WriteLine("═══════════════════════════════");
-            Console.WriteLine($"Account Name: {account._accountNumber}\nCurrent balance: {account._accountBalance:F}\nCurrent Debt: {account._LoanAmount}\nCurrency Type: {account._currencyType} \nInterestrate: {account._interestRate}\nAccount ID {account._accountID}");
+            Console.WriteLine($"Account Number: {account._accountNumber}\nCurrent balance: {account._accountBalance:F}\nCurrent Debt: {account._LoanAmount}\nCurrency Type: {account._currencyType} \nInterestrate: {account._interestRate}\nAccount ID {account._accountID}");
             Console.WriteLine("═══════════════════════════════");
         }
 
@@ -187,23 +238,55 @@ namespace WealthSpecialists
 
         public void Transfer(Bank_Application _bankApp)
         {
+            if (customer_accounts.Count() == 0)
+            {
+                Console.WriteLine("You dont have any accounts. Press Enter to return to main menu");
+                Console.ReadLine();
+                return;
+            }
             View_acc();
-            Console.WriteLine("From which account would you like to transfer?");
+            Console.WriteLine("From which account would you like to transfer? Press 0 or Enter to return to main menu");
             int.TryParse(Console.ReadLine(), out int input);
-            Console.WriteLine("Choose the account you want to transfer to?");
+            if (input < 0 || input > customer_accounts.Count)
+            {
+                Console.WriteLine("Please enter a valid number between 1 and " + customer_accounts.Count());
+                Transfer(_bankApp); // restarts method
+                return;
+            }
+            else if (input == 0)//return to main menu
+                return;
+            Console.WriteLine("Choose the account you want to transfer to? Press 0 or Enter to return to main menu");
             int.TryParse(Console.ReadLine(), out int inputtwo);
+            if (inputtwo < 0 || inputtwo > customer_accounts.Count)
+            {
+                Console.WriteLine("Please enter a valid number between 1 and " + customer_accounts.Count());
+                Transfer(_bankApp);
+                return;
+            }
+            else if (inputtwo == 0)
+                return;
+            else if (input == inputtwo)
+            {
+                Console.WriteLine("you have selected the same account twice");
+                Transfer(_bankApp);                                                         
+                return;
 
-            if (input == inputtwo)
-            {
-                Console.WriteLine("Sorry we cant transfer");
             }
-            Console.WriteLine("How much money would you like to transfer?");
-            int.TryParse(Console.ReadLine(), out int inputthree);
-            if (inputthree > customer_accounts[input - 1]._accountBalance)
-            {
-                Console.WriteLine("Still not enough money");
+            int inputthree;
+            while (true)
+            { 
+                Console.WriteLine("How much money would you like to transfer? Press Enter or 0 to return to main menu");
+                int.TryParse(Console.ReadLine(), out inputthree);
+                if (inputthree > customer_accounts[input - 1]._accountBalance)
+                {
+                    Console.WriteLine("You do not have enough money in your account");
+                }
+                else if (inputthree == 0) //back to main menu
+                    return;
+                else
+                    break;
             }
-            Task task = new Task(() =>
+        Task task = new Task(() =>
             {
                 TransferLogic(input, inputtwo, inputthree, _bankApp);
             });
