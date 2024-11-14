@@ -27,6 +27,7 @@ namespace WealthSpecialists
         public SavingsAccount(double accountBalance, string currencyType, int accountNumber) : base(accountBalance, currencyType, accountNumber)
         {
             _interestRate = 2.5;
+            _currencyType = "SEK";
         }
     }
 

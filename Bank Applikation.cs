@@ -411,18 +411,53 @@ namespace WealthSpecialists
             return null;
         }
 
-        private double CurrencyConverter(Account account)
+        public double CurrencyConverter(Account account, double amount, string currencyIn)
 
         {
-            if (account._currencyType == "USD")
-            {
-                double output = _dollar / account._accountBalance;
-                return output;
+            if (currencyIn == "SEK")
+            { 
+                if (account._currencyType == "USD")
+                {
+                    double output = _dollar / amount;
+                    return output;
+                }
+                else if (account._currencyType == "EUR")
+                {
+                    double output = _euro / amount;
+                    return output;
+                }
+            Console.WriteLine("Conversion failed");
+            return 0;
             }
-            else if (account._currencyType == "EUR")
+            else if (currencyIn == "USD")
             {
-                double output = _euro / account._accountBalance;
-                return output;
+                if (account._currencyType == "SEK")
+                {
+                    double output = _dollar * amount;
+                    return output;
+                }
+                else if (account._currencyType == "EUR")
+                {
+                    double output = amount / _euro;
+                    return output;
+                }
+                Console.WriteLine("Conversion failed");
+                return 0;
+            }
+            else if (currencyIn == "EUR")
+            {
+                if (account._currencyType == "SEK")
+                {
+                    double output = _euro * amount;
+                    return output;
+                }
+                else if (account._currencyType == "USD")
+                {
+                    double output = amount / _dollar;
+                    return output;
+                }
+                Console.WriteLine("Conversion failed");
+                return 0;
             }
             Console.WriteLine("Conversion failed");
             return 0;

@@ -103,8 +103,17 @@ namespace WealthSpecialists
                         {
                             if (accounttarget == account._accountNumber)
                             {
-                                customer.Add_money(account, money);
-                                Origin.Remove_money(from, money);
+                                if(account._currencyType != from._currencyType)
+                                {
+                                    double output = bankapp.CurrencyConverter(account, money, from._currencyType); //convertcurrency by checking account currency and from currency
+                                    customer.Add_money(account, output);
+                                    Origin.Remove_money(from, money);
+                                }
+                                else
+                                { 
+                                    customer.Add_money(account, money);
+                                    Origin.Remove_money(from, money);
+                                }
                             }
                         }
                 }
@@ -232,26 +241,19 @@ namespace WealthSpecialists
         public void TransferLogic(int input, int inputtwo, int inputthree, Bank_Application _bankApp)
         {
             Customer customer = this;
-            if (_accounts[inputtwo - 1] is ForeingCurrency)
+
+            if (customer_accounts[inputtwo - 1]._currencyType != customer_accounts[input-1]._currencyType)// if transfer from and transfer to dont have same currencytype
             {
-                if (_accounts[inputtwo - 1]._currencyType == "USD")
-                {
-                    double output = inputthree / _bankApp._dollar;
-                    _accounts[inputtwo - 1]._accountBalance += output;
-                    _accounts[input - 1]._accountBalance -= inputthree;
-                }
-                else if (_accounts[inputtwo - 1]._currencyType == "EUR")
-                {
-                    double output = inputthree / _bankApp._euro;
-                    _accounts[inputtwo - 1]._accountBalance += output;
-                    _accounts[input - 1]._accountBalance -= inputthree;
-                }
+                double output = _bankApp.CurrencyConverter(customer_accounts[inputtwo - 1], inputthree, customer_accounts[input - 1]._currencyType); //converts inputthree to inputtwo currency type and checks input 1 currency since user will always write own currency
+                Add_money(customer_accounts[inputtwo-1],output);
+                Remove_money(customer_accounts[input - 1], inputthree);
+         
             }
             else if (inputthree <= _accounts[input - 1]._accountBalance)
 
             {
-                _accounts[input - 1]._accountBalance -= inputthree;
-                _accounts[inputtwo - 1]._accountBalance += inputthree;
+                Add_money(customer_accounts[input - 1], inputthree);
+                Remove_money(customer_accounts[inputtwo - 2], inputthree);
             }
         }
 
