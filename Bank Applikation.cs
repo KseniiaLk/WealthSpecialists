@@ -34,7 +34,8 @@ namespace WealthSpecialists
             _timerRunning = false;
         }
 
-        public void TimerCallback(object state)
+        public void TimerCallback(object state
+            )
         {
             taskstarter(test);
         }
