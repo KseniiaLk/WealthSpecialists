@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -46,6 +47,7 @@ namespace WealthSpecialists
             int limit = 0;
             while (limit < 4)
             {
+                Console.WriteLine("═══════════════════════════════");
                 Console.WriteLine("[1]log in to account");
                 User user = Login();
                 if (user == null)
@@ -119,6 +121,8 @@ namespace WealthSpecialists
                         break;
 
                     case 4:
+                        Console.Clear();
+                        Title();
                         return;
 
                     default:
@@ -137,25 +141,30 @@ namespace WealthSpecialists
                 Console.WriteLine("═══════════════════════════════");
                 Console.WriteLine("[1]➤ Account overview");
                 Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[2]➤ Money transfer");
+                Console.WriteLine("[2]➤View Account History");
                 Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[3]➤ Create a new account");
+                Console.WriteLine("[3]➤ Money transfer");
                 Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[4]➤ Apply for loan");
+                Console.WriteLine("[4]➤ Create a new account");
                 Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[5]➤ Clear screen");
+                Console.WriteLine("[5]➤ Apply for loan");
                 Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[6]➤ Log out");
+                Console.WriteLine("[6]➤ Clear screen");
+                Console.WriteLine("═══════════════════════════════");
+                Console.WriteLine("[7]➤ Log out");
                 Console.WriteLine("═══════════════════════════════");
                 int.TryParse(Console.ReadLine(), out int input);
 
                 switch (input)
                 {
                     case 1:
-                        customer.View_acc();
+                        Console.Clear();
+                        Title();
                         Console.WriteLine("═══════════════════════════════");
                         Console.WriteLine("Would you like to see a detailed overview");
                         Console.WriteLine("Press the number corresponding to the account.");
+                        Console.WriteLine("═══════════════════════════════");
+                        customer.View_acc();
                         Console.WriteLine("Press enter to return");
                         int.TryParse(Console.ReadLine(), out int inputcust);
                         Console.WriteLine("═══════════════════════════════");
@@ -163,16 +172,51 @@ namespace WealthSpecialists
                             break;
                         try
                         {
-                            customer.View_detailed(customer.customer_accounts[inputcust - 1]);
+                            Console.Clear();
+                            Title();
+                            customer.View_detailed(customer._accounts[inputcust - 1]);
                         }
                         catch (Exception e)
                         {
 
                             Console.WriteLine(e.Message);
                         }
+                        Console.WriteLine("Press enter to return to menu");
+                        Console.ReadLine();
+                        Console.Clear();
+                        Title();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Title();
+                        customer.View_acc();
+                        Console.WriteLine("═══════════════════════════════");
+                        Console.WriteLine("Would you like to see account history");
+                        Console.WriteLine("Press the number corresponding to the account.");
+                        Console.WriteLine("═══════════════════════════════");
+                        Console.WriteLine("Press enter to return");
+                        int.TryParse(Console.ReadLine(), out int inputhis);
+                        Console.WriteLine("═══════════════════════════════");
+                        if (inputhis == 0)
+                            break;
+                        try
+                        {
+                            Console.Clear();
+                            Title();
+                            customer.View_acc_history(customer.customer_accounts[inputhis - 1]);
+                        }
+                        catch (Exception e)
+                        {
+
+                            Console.WriteLine(e.Message);
+                        }
+                        Console.WriteLine("Press enter to return to menu");
+                        Console.ReadLine();
+                        Console.Clear();
+                        Title();
                         break;
 
-                    case 2:
+                    case 3:
                         Console.WriteLine("═══════════════════════════════");
                         Console.WriteLine("Would you like to:");
                         Console.WriteLine("═══════════════════════════════");
@@ -209,7 +253,9 @@ namespace WealthSpecialists
 
                         break;
 
-                    case 3:
+                    case 4:
+                        Console.Clear();
+                        Title();
                         Console.WriteLine("═══════════════════════════════");
                         Console.WriteLine("Select account type to create");
                         Console.WriteLine("═══════════════════════════════");
@@ -224,20 +270,30 @@ namespace WealthSpecialists
                         switch (accountType)
                         {
                             case 1:
-                                Console.WriteLine();
+                                Console.Clear();
+                                Title();
+                                Console.WriteLine("═══════════════════════════════");
                                 customer.Create_account(1000, "SEK", this);
-                                Console.WriteLine("A new account has been created.");
+                                Console.WriteLine("═══════════════════════════════");
+                                Console.WriteLine("A new Savings account has been created.");
                                 customer.View_acc();
-                                Console.WriteLine();
+                                Console.WriteLine("═══════════════════════════════");
+                                Console.WriteLine("Press enter to return to menu");
+                                Console.WriteLine("═══════════════════════════════");
+                                Console.ReadLine();
+                                Console.Clear();
+                                Title();
                                 break;
 
                             case 2:
+                                Console.Clear();
+                                Title();
                                 Console.WriteLine("═══════════════════════════════");
                                 Console.WriteLine("Choose what currency you want to create the account in");
                                 Console.WriteLine("═══════════════════════════════");
-                                Console.WriteLine("[1]➤ $");
+                                Console.WriteLine("[1]➤ $ USD");
                                 Console.WriteLine("═══════════════════════════════");
-                                Console.WriteLine("[2]➤ €");
+                                Console.WriteLine("[2]➤ € EUR");
                                 Console.WriteLine("═══════════════════════════════");
                                 Console.WriteLine("[3]➤ Return to previous menu");
                                 Console.WriteLine("═══════════════════════════════");
@@ -246,19 +302,36 @@ namespace WealthSpecialists
                                 switch (currency)
                                 {
                                     case 1:
+                                        Console.Clear();
+                                        Title();
                                         customer.Create_Currencyaccount(1000, "USD", this);
                                         Console.WriteLine("A new account with the currency [USD] has been created.");
                                         customer.View_acc();
+                                        Console.WriteLine("═══════════════════════════════");
+                                        Console.WriteLine("Press enter to return to menu");
+                                        Console.WriteLine("═══════════════════════════════");
+                                        Console.ReadLine();
+                                        Console.Clear();
+                                        Title();
                                         break;
 
                                     case 2:
+                                        Console.Clear();
+                                        Title();
                                         customer.Create_Currencyaccount(1000, "EUR", this);
-
                                         Console.WriteLine("A new account with the currency [EUR] has been created.");
                                         customer.View_acc();
+                                        Console.WriteLine("═══════════════════════════════");
+                                        Console.WriteLine("Press enter to return to menu");
+                                        Console.WriteLine("═══════════════════════════════");
+                                        Console.ReadLine();
+                                        Console.Clear();
+                                        Title();
                                         break;
 
                                     case 3:
+                                        Console.Clear();
+                                        Title();
                                         break;
                                 }
                                 break;
@@ -268,18 +341,32 @@ namespace WealthSpecialists
                         }
                         break;
 
-                    case 4:
-                        Console.WriteLine("═══════════════════════════════");
-                        this.Request_loan(customer.Select_account("Choose account"));
-                        Console.WriteLine("═══════════════════════════════");
-                        break;
-
                     case 5:
+                        Console.Clear();
+                        Title();
+                        this.Request_loan(customer.Select_account("Choose account"));
+                        Console.WriteLine("Press enter to return");
+                        int.TryParse(Console.ReadLine(), out int inputreturn);
+                        if (inputreturn == 0)
+                            break;
+                        try
+                        {
+                            customer.View_detailed(customer._accounts[inputreturn - 1]);
+                        }
+                        catch (Exception e)
+                        {
+
+                            Console.WriteLine(e.Message);
+                        }
+                        break;
+                        
+
+                    case 6:
                         Console.Clear();
                         Title();
                         break;
 
-                    case 6:
+                    case 7:
                         return;
 
                     default:
@@ -291,7 +378,9 @@ namespace WealthSpecialists
 
         public void Request_loan(Account account)
         {
-            Console.WriteLine($"You can loan a maximum amount of {account._accountBalance * 5} at an interest rate of {account._interestRate}% \n how much would you like to loan?: ");
+            Console.WriteLine("═══════════════════════════════");
+            Console.WriteLine($"You can loan a maximum amount of {account._accountBalance * 5} at an interest rate of {account._interestRate} % \nhow much would you like to loan?: ");
+            Console.WriteLine("═══════════════════════════════");
             if (double.TryParse(Console.ReadLine(), out double amount) && amount <= account._accountBalance * 5)
             {
                 Console.WriteLine($"You have Requested a loan of {amount} at {account._interestRate}, the total amount to be repayed will be {amount * (1 + (account._interestRate / 100))}");
