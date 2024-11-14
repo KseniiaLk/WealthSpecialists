@@ -34,7 +34,8 @@ namespace WealthSpecialists
             _timerRunning = false;
         }
 
-        public void TimerCallback(object state)
+        public void TimerCallback(object state
+            )
         {
             taskstarter(test);
         }
@@ -159,11 +160,11 @@ namespace WealthSpecialists
                     case 1:
                         Console.Clear();
                         Title();
-                        customer.View_acc();
                         Console.WriteLine("═══════════════════════════════");
                         Console.WriteLine("Would you like to see a detailed overview");
                         Console.WriteLine("Press the number corresponding to the account.");
                         Console.WriteLine("═══════════════════════════════");
+                        customer.View_acc();
                         Console.WriteLine("Press enter to return");
                         int.TryParse(Console.ReadLine(), out int inputcust);
                         Console.WriteLine("═══════════════════════════════");
@@ -173,7 +174,7 @@ namespace WealthSpecialists
                         {
                             Console.Clear();
                             Title();
-                            customer.View_detailed(customer.customer_accounts[inputcust - 1]);
+                            customer.View_detailed(customer._accounts[inputcust - 1]);
                         }
                         catch (Exception e)
                         {
@@ -350,7 +351,7 @@ namespace WealthSpecialists
                             break;
                         try
                         {
-                            customer.View_detailed(customer.customer_accounts[inputreturn - 1]);
+                            customer.View_detailed(customer._accounts[inputreturn - 1]);
                         }
                         catch (Exception e)
                         {
