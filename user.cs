@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
@@ -328,13 +329,56 @@ namespace WealthSpecialists
 
         public void Add_user(Bank_Application bank)
         {
-            Console.WriteLine("Vänligen skriv in ditt användarnamn");
+            Console.WriteLine("═══════════════════════════════");
+            Console.WriteLine("Please enter Username");
             string input = Console.ReadLine();
-            Console.WriteLine("Vänligen skriv in ditt lösenord");
+            Console.WriteLine("Please enter Password");
             string pwinput = Console.ReadLine();
-            Customer customer = new Customer(input, pwinput);
-            bank._UserRegistry.Add(customer);
-            Console.WriteLine($"Användaren: {input} har blivit skapad.");
+            bool usernameTaken = bank._UserRegistry.Any(u => u._userName == input);
+            if (usernameTaken)
+            {
+                Console.Clear();
+                bank.Title();
+                Console.WriteLine("The username is already in use please choose a diffrent username.");
+                Console.WriteLine("═══════════════════════════════");
+                Console.WriteLine("Press enter to return to menu");
+                Console.WriteLine("═══════════════════════════════");
+                int.TryParse(Console.ReadLine(), out int inputexit1);
+                if (inputexit1 == 0)
+                    try
+                    {
+                        Console.Clear();
+                        bank.Title();
+                        return;
+                    }
+                    catch (Exception u)
+                    {
+                        Console.WriteLine(u.Message);
+                    }
+
+            }
+            else
+            {
+                Customer customer = new Customer(input, pwinput);
+                bank._UserRegistry.Add(customer);
+                Console.WriteLine($"Användaren: {input} har blivit skapad.");
+            }
+            Console.WriteLine("Press enter to exit");
+            Console.WriteLine("═══════════════════════════════");
+
+            int.TryParse(Console.ReadLine(), out int inputexit);
+            if (inputexit == 0)
+                try
+                {
+                    Console.Clear();
+                    bank.Title();
+                    return;
+                }
+                catch (Exception u)
+                {
+                    Console.WriteLine(u.Message);
+                }
+
         }
 
         public void UpdateCurrency(Bank_Application bank)
