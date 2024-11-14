@@ -91,14 +91,7 @@ namespace WealthSpecialists
         }
 
         public void TransferBetweenUsers(Bank_Application bankapp)
-        {
-            if (customer_accounts.Count == 0) //if user has no bankaccounts write it to console then exit method
-            {
-                Console.WriteLine("You have no bank accounts, Press Enter to return to meny");
-                Console.ReadLine();
-                return;
-            }
-            
+        {   
             Console.WriteLine("From which account would you like to transfer money from? Press Enter to return to menu");
             View_acc();
             int.TryParse(Console.ReadLine(), out int accountFrom);
