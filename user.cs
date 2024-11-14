@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace WealthSpecialists
@@ -22,7 +23,7 @@ namespace WealthSpecialists
 
     public class Customer : User
     {
-        public List<Account> customer_accounts = new List<Account>();
+        public List<Account> _accounts = new List<Account>();
 
         public Customer(string userName, string passWord) : base(userName, passWord)
         {
@@ -45,9 +46,14 @@ namespace WealthSpecialists
             int choise;
             while (true)
             {
-                if (int.TryParse(Console.ReadLine(), out choise) && choise > 0 && choise < customer_accounts.Count)
+                if (int.TryParse(Console.ReadLine(), out choise) && choise > 0 && choise <= _accounts.Count)
                 {
-                    return customer_accounts[choise - 1];
+                    return _accounts[choise - 1];
+                }
+                else if (_accounts.Count == 0)
+                {
+                    Console.WriteLine("you have no accounts");
+                    return null;
                 }
                 else
                 {
@@ -56,17 +62,31 @@ namespace WealthSpecialists
             }
         }
 
+        public void Log_transaction(Account account, double amountTrensfered) //behöver kontroleras mot metoderna den används i för att se om inputen är positiv eller negativ
+        {
+            AccountHistory history = new AccountHistory(account, amountTrensfered);
+            account._accounthistory.Add(history);
+
+        }
+        public void veiw_accountHitory(Account account)
+        { 
+            foreach (AccountHistory item in account._accounthistory)
+            {
+                Console.WriteLine($"{item._date}: previous balance: {item._previousBalance} transfered {item._amountTransfered} new balance{item._postBalance}");
+            }
+        }
+
         public void Create_account(double balance, string currencyType, Bank_Application bank)
         {
             Account newAccount = new SavingsAccount(balance, currencyType, bank._totalAccounts);
-            customer_accounts.Add(newAccount);
+            _accounts.Add(newAccount);
             bank._totalAccounts++;
         }
 
         public void Create_Currencyaccount(double balance, string currencyType, Bank_Application bank)
         {
             Account newAccount2 = new ForeingCurrency(balance, currencyType, bank._totalAccounts);
-            customer_accounts.Add(newAccount2);
+            _accounts.Add(newAccount2);
             bank._totalAccounts++;
         }
 
@@ -78,7 +98,7 @@ namespace WealthSpecialists
                 if (transferTargetUser == user._userName)
                 {
                     if (user is Customer customer)
-                        foreach (var account in customer.customer_accounts)
+                        foreach (var account in customer._accounts)
                         {
                             if (accounttarget == account._accountNumber)
                             {
@@ -95,6 +115,7 @@ namespace WealthSpecialists
             Console.WriteLine("From which account would you like to transfer money from? Press Enter to return to menu");
             View_acc();
             int.TryParse(Console.ReadLine(), out int accountFrom);
+
             if (accountFrom == 0)
                 return;
             Account from;
@@ -171,10 +192,16 @@ namespace WealthSpecialists
         public void View_acc()
         {
             int num = 1;
-            foreach (Account item in customer_accounts)
+            if (_accounts.Count ==0)
+            {
+                Console.WriteLine("You have no accounts");
+            }
+            foreach (Account item in _accounts)
             {
                 if (item is SavingsAccount)
+
                     Console.WriteLine($"Account: {num} Accountnumber: {item._accountNumber} Balance: {item._accountBalance:F} {item._currencyType}, Intrest {item._interestRate:F}%");
+
                 else
                     Console.WriteLine($"Account: {num} Accountnumber: {item._accountNumber} Balance: {item._accountBalance:F} {item._currencyType}");
                 num++;
@@ -185,14 +212,12 @@ namespace WealthSpecialists
 
         {
             Console.WriteLine("═══════════════════════════════");
+ 
             Console.WriteLine($"Account Number: {account._accountNumber}\nCurrent balance: {account._accountBalance:F}\nCurrent Debt: {account._LoanAmount}\nCurrency Type: {account._currencyType} \nInterestrate: {account._interestRate}\nAccount ID {account._accountID}");
+
             Console.WriteLine("═══════════════════════════════");
         }
 
-        public void Log_transaction(Account account, double transfer)
-        {
-            account._accounthistory.Add(new AccountHistory(account, transfer));
-        }
 
         public void View_acc_history(Account account)
         {
@@ -206,26 +231,26 @@ namespace WealthSpecialists
         public void TransferLogic(int input, int inputtwo, int inputthree, Bank_Application _bankApp)
         {
             Customer customer = this;
-            if (customer_accounts[inputtwo - 1] is ForeingCurrency)
+            if (_accounts[inputtwo - 1] is ForeingCurrency)
             {
-                if (customer_accounts[inputtwo - 1]._currencyType == "USD")
+                if (_accounts[inputtwo - 1]._currencyType == "USD")
                 {
                     double output = inputthree / _bankApp._dollar;
-                    customer_accounts[inputtwo - 1]._accountBalance += output;
-                    customer_accounts[input - 1]._accountBalance -= inputthree;
+                    _accounts[inputtwo - 1]._accountBalance += output;
+                    _accounts[input - 1]._accountBalance -= inputthree;
                 }
-                else if (customer_accounts[inputtwo - 1]._currencyType == "EUR")
+                else if (_accounts[inputtwo - 1]._currencyType == "EUR")
                 {
                     double output = inputthree / _bankApp._euro;
-                    customer_accounts[inputtwo - 1]._accountBalance += output;
-                    customer_accounts[input - 1]._accountBalance -= inputthree;
+                    _accounts[inputtwo - 1]._accountBalance += output;
+                    _accounts[input - 1]._accountBalance -= inputthree;
                 }
             }
-            else if (inputthree <= customer_accounts[input - 1]._accountBalance)
+            else if (inputthree <= _accounts[input - 1]._accountBalance)
 
             {
-                customer_accounts[input - 1]._accountBalance -= inputthree;
-                customer_accounts[inputtwo - 1]._accountBalance += inputthree;
+                _accounts[input - 1]._accountBalance -= inputthree;
+                _accounts[inputtwo - 1]._accountBalance += inputthree;
             }
         }
 
@@ -256,9 +281,11 @@ namespace WealthSpecialists
                 Transfer(_bankApp);
                 return;
             }
+
             else if (inputtwo == 0)
                 return;
             else if (input == inputtwo)
+
             {
                 Console.WriteLine("you have selected the same account twice");
                 Transfer(_bankApp);                                                         
