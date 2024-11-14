@@ -30,7 +30,6 @@ namespace WealthSpecialists
                 task.Start();
                 await task;
             }
-            Console.WriteLine("All tasks completed.");
             _timerRunning = false;
         }
 
@@ -43,7 +42,7 @@ namespace WealthSpecialists
         public void menu()
         {
             Title();
-            _timer = new Timer(TimerCallback, null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(0.5)); // first time we start the meny we start timer starts goes to 1 minute then 5
+            _timer = new Timer(TimerCallback, null, TimeSpan.FromMinutes(15), TimeSpan.FromMinutes(15)); // first time we start the meny we start timer starts goes to 1 minute then 5
             int limit = 0;
             while (limit < 4)
             {
@@ -136,23 +135,23 @@ namespace WealthSpecialists
         {
             while (true)
             {
-                Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("Du är inloggad på : " + customer._userName);
-                Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[1]➤ Account overview");
-                Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[2]➤View Account History");
-                Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[3]➤ Money transfer");
-                Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[4]➤ Create a new account");
-                Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[5]➤ Apply for loan");
-                Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[6]➤ Clear screen");
-                Console.WriteLine("═══════════════════════════════");
-                Console.WriteLine("[7]➤ Log out");
-                Console.WriteLine("═══════════════════════════════");
+                Center_text("═══════════════════════════════");
+                Center_text("Du är inloggad på : " + customer._userName);
+                Center_text("═══════════════════════════════");
+                Center_text("[1]➤ Account overview");
+                Center_text("═══════════════════════════════");
+                Center_text("[2]➤View Account History");
+                Center_text("═══════════════════════════════");
+                Center_text("[3]➤ Money transfer");
+                Center_text("═══════════════════════════════");
+                Center_text("[4]➤ Create a new account");
+                Center_text("═══════════════════════════════");
+                Center_text("[5]➤ Apply for loan");
+                Center_text("═══════════════════════════════");
+                Center_text("[6]➤ Clear screen");
+                Center_text("═══════════════════════════════");
+                Center_text("[7]➤ Log out");
+                Center_text("═══════════════════════════════");
                 int.TryParse(Console.ReadLine(), out int input);
 
                 switch (input)
@@ -461,6 +460,12 @@ namespace WealthSpecialists
             }
             Console.WriteLine("Conversion failed");
             return 0;
+        }
+        static void Center_text(string text)
+        {
+            int consoleWidth = Console.WindowWidth;
+            int leftPadding = (consoleWidth - text.Length) / 2;
+            Console.WriteLine(text.PadLeft(leftPadding + text.Length));
         }
 
         public void Title()
