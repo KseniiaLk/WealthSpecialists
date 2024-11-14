@@ -24,7 +24,7 @@ namespace WealthSpecialists
 
     public class Customer : User
     {
-        public List<Account> _accounts = new List<Account>();
+        public List<Account> customer_accounts = new List<Account>();
 
         public Customer(string userName, string passWord) : base(userName, passWord)
         {
@@ -47,11 +47,11 @@ namespace WealthSpecialists
             int choise;
             while (true)
             {
-                if (int.TryParse(Console.ReadLine(), out choise) && choise > 0 && choise <= _accounts.Count)
+                if (int.TryParse(Console.ReadLine(), out choise) && choise > 0 && choise <= customer_accounts.Count)
                 {
-                    return _accounts[choise - 1];
+                    return customer_accounts[choise - 1];
                 }
-                else if (_accounts.Count == 0)
+                else if (customer_accounts.Count == 0)
                 {
                     Console.WriteLine("you have no accounts");
                     return null;
@@ -73,21 +73,21 @@ namespace WealthSpecialists
         { 
             foreach (AccountHistory item in account._accounthistory)
             {
-                Console.WriteLine($"{item._date}: previous balance: {item._previousBalance} transfered {item._amountTransfered} new balance{item._postBalance}");
+                Console.WriteLine($"{item._date}: previous balance:  {item._previousBalance} transfered:  {item._amountTransfered} new balance:  {item._postBalance}");
             }
         }
 
         public void Create_account(double balance, string currencyType, Bank_Application bank)
         {
             Account newAccount = new SavingsAccount(balance, currencyType, bank._totalAccounts);
-            _accounts.Add(newAccount);
+            customer_accounts.Add(newAccount);
             bank._totalAccounts++;
         }
 
         public void Create_Currencyaccount(double balance, string currencyType, Bank_Application bank)
         {
             Account newAccount2 = new ForeingCurrency(balance, currencyType, bank._totalAccounts);
-            _accounts.Add(newAccount2);
+            customer_accounts.Add(newAccount2);
             bank._totalAccounts++;
         }
 
@@ -99,7 +99,7 @@ namespace WealthSpecialists
                 if (transferTargetUser == user._userName)
                 {
                     if (user is Customer customer)
-                        foreach (var account in customer._accounts)
+                        foreach (var account in customer.customer_accounts)
                         {
                             if (accounttarget == account._accountNumber)
                             {
@@ -108,11 +108,15 @@ namespace WealthSpecialists
                                     double output = bankapp.CurrencyConverter(account, money, from._currencyType); //convertcurrency by checking account currency and from currency
                                     customer.Add_money(account, output);
                                     Origin.Remove_money(from, money);
+                                    Log_transaction(from, -money);
+                                    Log_transaction(account, output);
                                 }
                                 else
                                 { 
                                     customer.Add_money(account, money);
                                     Origin.Remove_money(from, money);
+                                    Log_transaction(from, -money);
+                                    Log_transaction(account, money);
                                 }
                             }
                         }
@@ -202,11 +206,11 @@ namespace WealthSpecialists
         public void View_acc()
         {
             int num = 1;
-            if (_accounts.Count ==0)
+            if (customer_accounts.Count ==0)
             {
                 Console.WriteLine("You have no accounts");
             }
-            foreach (Account item in _accounts)
+            foreach (Account item in customer_accounts)
             {
                 if (item is SavingsAccount)
 
@@ -247,13 +251,18 @@ namespace WealthSpecialists
                 double output = _bankApp.CurrencyConverter(customer_accounts[inputtwo - 1], inputthree, customer_accounts[input - 1]._currencyType); //converts inputthree to inputtwo currency type and checks input 1 currency since user will always write own currency
                 Add_money(customer_accounts[inputtwo-1],output);
                 Remove_money(customer_accounts[input - 1], inputthree);
-         
+                Log_transaction(customer_accounts[inputtwo - 1], output);
+                Log_transaction(customer_accounts[input - 1], -inputthree);
+
+
             }
-            else if (inputthree <= _accounts[input - 1]._accountBalance)
+            else if (inputthree <= customer_accounts[input - 1]._accountBalance)
 
             {
                 Add_money(customer_accounts[input - 1], inputthree);
                 Remove_money(customer_accounts[inputtwo - 2], inputthree);
+                Log_transaction(customer_accounts[input - 1], inputthree);
+                Log_transaction(customer_accounts[inputtwo - 2], -inputthree);
             }
         }
 

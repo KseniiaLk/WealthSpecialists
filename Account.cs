@@ -19,7 +19,7 @@ namespace WealthSpecialists
         public Guid _accountID { get; set; }
         public string _currencyType { get; set; }
         public double _interestRate { get; set; }
-        public List<AccountHistory> _accounthistory { get; set; }
+        public List<AccountHistory> _accounthistory = new List<AccountHistory>();
     }
 
     internal class SavingsAccount : Account
