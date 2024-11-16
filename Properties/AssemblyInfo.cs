@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -10,5 +9,5 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-
+[assembly: Guid("e77ba767-dfe7-4663-bdbd-d1e5faa67201")]
 [assembly: Guid("e77ba767-dfe7-4663-bdbd-d1e5faa67201")]
