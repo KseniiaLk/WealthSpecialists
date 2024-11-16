@@ -1,30 +1,30 @@
 # WealthSpecialists
 ## Storypoints
-### Användhantering
+### User Management
 
-#### Som systemägare vill jag att alla användare loggar in med ett unikt användarnamn och lösenord.
-#### Som administratör på banken vill jag kunna skapa nya användare i systemet.
-#### Som systemägare vill jag att användare som misslyckas med inloggningen tre gånger ska låsas ute från systemet.
+#### As the system owner, I want all users to log in with a unique username and password.
+#### As the administrator of the bank, I want to be able to create new users in the system.
+#### As the system owner, I want users who fail to log in three times to be locked out of the system.
 
-### Kontoinformation
+### Account Information
 
-#### Som användare vill jag kunna se en lista med alla mina bankkonton och saldot på dessa.
-#### Som användare vill jag kunna föra över pengar mellan två av mina koton.
-#### Som användare vill jag kunna föra över pengar till andra kunder i banken.
-#### Som användare vill jag kunna öppna nya konton i banken. 
-#### Som användare vill jag kunna ha ett konto i en annan valuta.
-#### Som bankägare vill jag att överföringar mellan konton med olika valutor växlas enligt den aktuella växelkursen, som uppdateras dagligen av administratören.
-#### Som användare vill jag kunna öppna ett sparkonto och se vilken ränta jag kan få på inställningar. 
-#### Som användare vill jag kunna låna pengar av banken och direkt få se hur mycket ränta jag kommer behöva betala på lånet. 
-#### Som bankägare vill jag begränsa hur mycket varje kund kan låna till max 5 gånger det belopp de redan har hos banken.
-#### Som användare vill jag kunna se en logg på alla överföringar och transaktioner som skett på mina konton.
+#### As a user, I want to see a list of all my bank accounts and their balances.
+#### As a user, I want to be able to transfer money between two of my accounts.
+#### As a user, I want to be able to transfer money to other bank customers.
+#### As a user, I want to be able to open new accounts at the bank.
+#### As a user, I want to be able to have an account in another currency.
+#### As the bank owner, I want transfers between accounts with different currencies to be exchanged according to the current exchange rate, which is updated daily by the administrator.
+#### As a user, I want to be able to open a savings account and see what interest rate I can get on it.
+#### As a user, I want to be able to borrow money from the bank and see immediately how much interest I will need to pay on the loan.
+#### As the bank owner, I want to limit how much each customer can borrow to a maximum of five times the amount they already have with the bank.
+#### As a user, I want to be able to view a log of all transfers and transactions that have occurred on my accounts.
 
-### Användarupplevelse
+### User Experience
 
-#### Som bankägare vill jag att appen har en tilltalande design med tydliga menyer, färgsättning och en snygg ASCII-art logga vid inloggning.
-#### Som bankägare vill jag att transaktioner inte sker direkt när användarna registrerar dem, utan istället var 15 minut för att ha bättre kontroll.
+#### As the bank owner, I want the app to have an attractive design with clear menus, color schemes, and a nice ASCII-art logo at login.
+#### As the bank owner, I want transactions to not happen immediately when users register them, but instead every 15 minutes, for better control.
 
-### Noteringar
+### Notes
 
-#### Varje storypoint bör bedömas och prioriteras i samband med sprintplanering.
-#### Överväg att dela upp större storypoints i mindre uppgifter för effektivare arbete och tydligare ansvarsfördelning.
+#### Each story point should be assessed and prioritized during sprint planning.
+#### Consider breaking larger story points into smaller tasks for more efficient work and clearer responsibility distribution.
