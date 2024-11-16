@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WealthSpecialists
 {
-     public abstract class Account
+    public abstract class Account
     {
-        public Account(double accountBalance, string currencyType)
+        public Account(double accountBalance, string currencyType, int accountNumber)
         {
+            _accountNumber = accountNumber;
             _accountBalance = accountBalance;
             _accountID = Guid.NewGuid();
             _currencyType = currencyType;
@@ -17,30 +15,26 @@ namespace WealthSpecialists
 
         public double _accountBalance = 0;
         public double _LoanAmount = 0;
-        public string _accountname { get; set; }
+        public int _accountNumber = 1;
         public Guid _accountID { get; set; }
         public string _currencyType { get; set; }
         public double _interestRate { get; set; }
+        public List<AccountHistory> _accounthistory = new List<AccountHistory>();
     }
+
     internal class SavingsAccount : Account
     {
-        public SavingsAccount(double accountBalance, string currencyType) : base(accountBalance, currencyType)
+        public SavingsAccount(double accountBalance, string currencyType, int accountNumber) : base(accountBalance, currencyType, accountNumber)
         {
             _interestRate = 2.5;
+            _currencyType = "SEK";
         }
-
-        
-
     }
+
     internal class ForeingCurrency : Account
     {
-        public ForeingCurrency(double accountBalance, string currencyType, string currency) : base(accountBalance, currencyType)
+        public ForeingCurrency(double accountBalance, string currencyType, int accountNumber) : base(accountBalance, currencyType, accountNumber)
         {
-            _currencyType = currency;
         }
-
-        public string _currencyType { get; set; }
     }
-
-    
 }
