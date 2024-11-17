@@ -2,6 +2,7 @@
 ## Storypoints
 ### User Management
 
+
 #### As the system owner, I want all users to log in with a unique username and password.
 #### As the administrator of the bank, I want to be able to create new users in the system.
 #### As the system owner, I want users who fail to log in three times to be locked out of the system.
@@ -28,3 +29,5 @@
 
 #### Each story point should be assessed and prioritized during sprint planning.
 #### Consider breaking larger story points into smaller tasks for more efficient work and clearer responsibility distribution.
+
+![Skärmbild (1)](https://github.com/user-attachments/assets/bb960581-1b2b-43e4-9f66-ccce5b8b09b5)
