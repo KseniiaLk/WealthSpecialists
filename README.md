@@ -1,5 +1,7 @@
 # WealthSpecialists
 ## Storypoints
+![image](https://github.com/user-attachments/assets/6b759683-75f8-4fee-a565-e97fecfa1ca7)
+
 ### User Management
 
 
